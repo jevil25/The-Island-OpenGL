@@ -4,7 +4,7 @@
 
 //basic settings
 void init(void){
-    glClearColor(1,1,1,0);
+    glClearColor(0,0,0.6,1);
     glMatrixMode(GL_PROJECTION);
     glOrtho(0,50,0,50,0,10);
 }
@@ -13,8 +13,7 @@ void init(void){
 void displayText(char *text,int length,int x,int y){
     int i;
     for(i=0;i<length;i++){
-        glRasterPos2i(x+i,y);
-        glColor3b(1,1,1);
+        glRasterPos2f(x+i,y);
         glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,text[i]);
     }
 }
@@ -23,6 +22,7 @@ void displayText(char *text,int length,int x,int y){
 void newDisplay(){
     init();
     glClear(GL_COLOR_BUFFER_BIT);
+    glColor3b(254, 126, 159);
     displayText(" Welcome to the Island",22,10,20);
     glEnd();
     glFlush();
@@ -46,20 +46,17 @@ void mouse(int button, int state, int x, int y)
 
 //draws next button
 void Button(){
-    char next[]="next";
-    int next_length=4,i;
-    glColor3b(1,1,1);
-    glBegin(GL_LINE_LOOP);
-    glVertex2f(22,30);
-    glVertex2f(22,34);
+    char next[]=" Next";
+    int next_length=5,i;
+    glColor3b(127,127,127);
+    glBegin(GL_POLYGON);
+    glVertex2f(21,30);
+    glVertex2f(21,34);
     glVertex2f(26,34);
     glVertex2f(26,30);
     glEnd();
-    for(i=0;i<next_length;i++){
-        glRasterPos2f(22.25+i,31.75);
-        glColor3b(1,1,1);
-        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,next[i]);
-    }
+    glColor3b(0,0,0);
+    displayText(next,next_length,21.5,32.75);
     glFlush();
     glEnd();
 }
@@ -74,7 +71,9 @@ void drawMyDesign(){
     char projectName[]=" The Island";
     int i,name_usn_length=33, projectName_length=11;
     glClear(GL_COLOR_BUFFER_BIT);
+    glColor3b(254, 126, 159);
     displayText(projectName,projectName_length,19,45);
+    glColor3b(127,127,127);
     displayText(ajn,name_usn_length,10,40);
     displayText(afd,name_usn_length,10,38);
     Button();
