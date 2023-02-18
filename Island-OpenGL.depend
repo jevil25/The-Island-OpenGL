@@ -17,3 +17,7 @@
 	<GL/glu.h>
 	<stdlib.h>
 
+1676707245 source:c:\users\aaron\onedrive\desktop\github\the island-opengl\main.cpp
+	<windows.h>
+	<GL/glut.h>
+
