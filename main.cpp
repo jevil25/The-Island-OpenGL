@@ -1,12 +1,24 @@
 #include<windows.h>
 #include<GL/glut.h>
 #include<stdio.h>
+#include <ctime>
 
+int shift=0;
 //basic settings
 void init(void){
     glClearColor(0,0,0.6,1);
     glMatrixMode(GL_PROJECTION);
     glOrtho(0,50,0,50,0,10);
+}
+
+void delay(int milliseconds) {
+    clock_t start_time = clock();
+    while ((clock() - start_time) * 1000 / CLOCKS_PER_SEC < milliseconds) {}
+}
+
+void disableInput() {
+    glutPassiveMotionFunc(NULL);
+    glutKeyboardFunc(NULL);
 }
 
 //used to display texts
@@ -18,15 +30,85 @@ void displayText(char *text,int length,int x,int y){
     }
 }
 
+void drawing_moving_boats() {
+	// we want to draw moving boat
+        //water
+        glClear(GL_COLOR_BUFFER_BIT);
+        glColor3f(0.3, 0.3, 1);
+        glBegin(GL_POLYGON);
+        glVertex2f(0, 0);
+        glVertex2f(0, 12);
+        glVertex2f(75, 12);
+        glVertex2f(75, 0);
+
+        glEnd();
+
+        //boat trapezium
+        glColor3f(1.0, 0.0, 0.0);
+        glBegin(GL_POLYGON);
+        glVertex2f(22 + shift, 20);
+        glVertex2f(2 + shift, 20);
+        glVertex2f(7 + shift, 10);
+        glVertex2f(17 + shift, 10);
+
+        glEnd();
+
+        //black stick
+        glColor3f(0.160, 0.658, 0.203);
+        glBegin(GL_POLYGON);
+        glVertex2f(12 + shift, 30);
+        glVertex2f(12 + shift, 25);
+        glVertex2f(9 + shift, 25.019);
+
+        glEnd();
+
+        // fourth regular shape is octagon
+        glColor3f(0.0, 0.0, 0.0);
+        glBegin(GL_POLYGON);
+        glVertex2f(12 + shift, 25.0);
+        glVertex2f(12 + shift, 20);
+        glVertex2f(11 + shift, 20);
+        glVertex2f(11 + shift, 25);
+
+
+        glEnd();
+
+	glutSwapBuffers();
+}
+
+/* function to make the user able to deal with the system
+void key(int key, int x, int y) {
+	switch (key)
+	{
+	case GLUT_KEY_LEFT:
+		shift--;
+		glutPostRedisplay();
+		break;
+	case GLUT_KEY_RIGHT:
+		shift++;
+		glutPostRedisplay();
+		break;
+
+
+	}
+}
+ */
 
 void newDisplay(){
     init();
+    disableInput();
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3b(254, 126, 159);
-    displayText(" Welcome to the Island",22,10,20);
+    displayText(" Welcome to the Island",22,20,20);
+    while(shift!=24){
+        drawing_moving_boats();
+        shift=shift+1;
+        delay(200);
+    }
     glEnd();
     glFlush();
 }
+
 
 // Mouse click event handler function
 void mouse(int button, int state, int x, int y)
@@ -43,7 +125,6 @@ void mouse(int button, int state, int x, int y)
         }
     }
 }
-
 //draws next button
 void Button(){
     char next[]=" Next";
