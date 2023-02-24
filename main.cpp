@@ -26,7 +26,7 @@ void displayText(char *text,int length,int x,int y){
     int i;
     for(i=0;i<length;i++){
         glRasterPos2f(x+i,y);
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,text[i]);
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,text[i]);
     }
 }
 
@@ -78,6 +78,9 @@ void drawing_moving_boats() {
 
 void newDisplay(){
     init();
+    glutInitWindowPosition(20,20);
+    glutInitWindowSize(1920,1080);
+    glutFullScreen();
     disableInput();
     glClear(GL_COLOR_BUFFER_BIT);
     while(shift!=24){
@@ -95,9 +98,9 @@ void mouse(int button, int state, int x, int y)
 {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
             //printf("Inside the button\n");
-            //printf("%d  %d\n",x,y);
+            printf("%d  %d\n",x,y);
         // Check if the mouse is inside the rectangle
-        if (x >= 419 && x <= 520 && y >= 295 && y <= 348) {
+        if (x >= 563 && x <= 691 && y >= 460 && y <= 517) {
             // Call function to create a new window
             //printf("New window Created");
             glutCreateWindow("Island View");
@@ -111,13 +114,13 @@ void Button(){
     int next_length=5,i;
     glColor3b(127,127,127);
     glBegin(GL_POLYGON);
-    glVertex2f(21,25);
-    glVertex2f(21,29);
-    glVertex2f(26,29);
-    glVertex2f(26,25);
+    glVertex2f(22,14);
+    glVertex2f(22,18);
+    glVertex2f(27,18);
+    glVertex2f(27,14);
     glEnd();
     glColor3b(0,0,0);
-    displayText(next,next_length,21.5,27.75);
+    displayText(next,next_length,22.5,15.75);
     glFlush();
     glEnd();
 }
@@ -129,14 +132,20 @@ void Button(){
 void drawMyDesign(){
     char ajn[]="Aaron Jevil Nazareth   4nm20cs005";
     char afd[]="Aaron Francis Dsouza   4nm20cs004";
+    char sirs[]="Guided by:";
+    char sir1[]="Dr. PRADEEP KANCHAN";
+    char sir2[]="Mr. PUNEETH R P";
     char projectName[]=" The Island";
-    int i,name_usn_length=33, projectName_length=11;
+    int i,name_usn_length=33, projectName_length=11,sirs_length=10,sir1_length=19,sir2_length=15;
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3b(254, 126, 159);
-    displayText(projectName,projectName_length,19,40);
+    displayText(projectName,projectName_length,19,32);
     glColor3b(127,127,127);
-    displayText(ajn,name_usn_length,10,35);
-    displayText(afd,name_usn_length,10,33);
+    displayText(ajn,name_usn_length,10,27);
+    displayText(afd,name_usn_length,10,25);
+    displayText(sirs,sirs_length,10,23);
+    displayText(sir1,sir1_length,10,21);
+    displayText(sir2,sir2_length,10,19);
     Button();
 }
 
@@ -145,9 +154,10 @@ int main(int argc, char**argv)
     glutInit(&argc,argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowPosition(20,20);
-    glutInitWindowSize(1000,1000);
+    glutInitWindowSize(1920,1080);
     glutCreateWindow("The Island");
     init();
+    glutFullScreen();
     glutDisplayFunc(drawMyDesign);
     glutMouseFunc(mouse);
     glutMainLoop();
