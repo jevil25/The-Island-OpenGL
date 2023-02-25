@@ -3,7 +3,7 @@
 #include<stdio.h>
 #include <ctime>
 
-int shift=0;
+int shift=0,flag=0;
 //basic settings
 void init(void){
     glClearColor(0,0,0.6,1);
@@ -23,10 +23,16 @@ void disableInput() {
 
 //used to display texts
 void displayText(char *text,int length,int x,int y){
-    int i;
+    int i,len=0;
     for(i=0;i<length;i++){
-        glRasterPos2f(x+i,y);
-        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,text[i]);
+            if(len==44){
+                y=y-2;
+                x=x-44;
+                len=0;
+            }
+            glRasterPos2f(x+i,y);
+            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,text[i]);
+            len++;
     }
 }
 
@@ -76,12 +82,12 @@ void drawing_moving_boats() {
 	glutSwapBuffers();
 }
 
+
 void newDisplay(){
     init();
     glutInitWindowPosition(20,20);
     glutInitWindowSize(1920,1080);
     glutFullScreen();
-    disableInput();
     glClear(GL_COLOR_BUFFER_BIT);
     while(shift!=24){
         drawing_moving_boats();
@@ -92,9 +98,8 @@ void newDisplay(){
     glFlush();
 }
 
-
 // Mouse click event handler function
-void mouse(int button, int state, int x, int y)
+void mousenew(int button, int state, int x, int y)
 {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
             //printf("Inside the button\n");
@@ -102,16 +107,19 @@ void mouse(int button, int state, int x, int y)
         // Check if the mouse is inside the rectangle
         if (x >= 563 && x <= 691 && y >= 460 && y <= 517) {
             // Call function to create a new window
-            //printf("New window Created");
-            glutCreateWindow("Island View");
-            glutDisplayFunc(newDisplay);
+            printf("New window Created");
+            if(flag==1)
+            {
+                printf("2");
+                glutCreateWindow("Island View");
+                glutDisplayFunc(newDisplay);
+            }
         }
     }
 }
+
 //draws next button
-void Button(){
-    char next[]=" Next";
-    int next_length=5,i;
+void Button(char next[],int next_length){
     glColor3b(127,127,127);
     glBegin(GL_POLYGON);
     glVertex2f(22,14);
@@ -125,7 +133,42 @@ void Button(){
     glEnd();
 }
 
+void newDisplaySmall(){
+    init();
+    glutInitWindowPosition(20,20);
+    glutInitWindowSize(960,540);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glutMouseFunc(mousenew);
+    char descrip[]="The island is surrounded by clear blue water that sparkles in the sunlight. On the beach, a small village with a few huts is visible, scattered around a central square. In the middle of the square is a small hut made of straw and wood. Further up the beach, a lighthouse stands tall and proud, with its beam of light sweeping across the sea. You can see the figure of a lighthouse keeper inside, tending to the light and watching for ships in the distance. The lighthouse is an important landmark on the island, guiding sailors safely to shore. As you leave the island, you realize that it's a special place, a hidden gem in the vast expanse of the sea. You feel lucky to have had the chance to visit, and you vow to return someday, to soak up more of its beauty and charm.";
+    int despLen=372;
+    displayText(descrip,despLen,2,40);
+    glEnd();
+    glFlush();
+    Button("Next",5);
+    glEnd();
+    glFlush();
 
+}
+
+// Mouse click event handler function
+void mouse(int button, int state, int x, int y)
+{
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+            //printf("Inside the button\n");
+            printf("%d  %d\n",x,y);
+        // Check if the mouse is inside the rectangle
+        if (x >= 563 && x <= 691 && y >= 460 && y <= 517) {
+            // Call function to create a new window
+            printf("New window Created");
+            if(flag==0){
+                printf("1");
+                glutCreateWindow("Island Description");
+                glutDisplayFunc(newDisplaySmall);
+                flag=1;
+            }
+        }
+    }
+}
 
 //main display and entry function
 //add all components as functions here to display
@@ -146,7 +189,7 @@ void drawMyDesign(){
     displayText(sirs,sirs_length,10,23);
     displayText(sir1,sir1_length,10,21);
     displayText(sir2,sir2_length,10,19);
-    Button();
+    Button("Next",5);
 }
 
 int main(int argc, char**argv)
