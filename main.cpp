@@ -1,7 +1,28 @@
 #include<windows.h>
-#include<GL/glut.h>
+#include<GL/freeglut.h>
 #include<stdio.h>
 #include <ctime>
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+#include <math.h>
+#include <stdlib.h>
+
+float s=-40.0; // Global Variable for sun.
+float m=190.0; // Global Variable for moon.
+float c=200.0; // Global Variable for cloud.
+float cs=300.0; // Global Variable for small cloud.
+float cl=400.0; // Global Variable for last cloud.
+float w=-20.0; // Global Variable for wave.
+float b=-30.0; // Global Variable for boat.
+float sh=200.0; // Global Variable for ship.
+float car=150.0; // Global Variable for car.
+float h=40.0; // Global Variable for human.
+float h2=-12.0; // Global Variable for human.
+float ball=0; // Global Variable for Football.
+float h1=75.0; // Global Variable for sun.
 
 int shift=0,flag=0;
 //basic settings
@@ -9,6 +30,13 @@ void init(void){
     glClearColor(0,0,0.6,1);
     glMatrixMode(GL_PROJECTION);
     glOrtho(0,50,0,50,0,10);
+}
+
+void initDesign(void)
+{
+    glClearColor(0.58, 0.97,1, 0.0);
+    glOrtho(-100,100,-100,100,-100,100);
+
 }
 
 void delay(int milliseconds) {
@@ -36,64 +64,134 @@ void displayText(char *text,int length,int x,int y){
     }
 }
 
-void drawing_moving_boats() {
-	// we want to draw moving boat
-        //water
-        glClear(GL_COLOR_BUFFER_BIT);
-        glColor3f(0.3, 0.3, 1);
-        glBegin(GL_POLYGON);
-        glVertex2f(0, 0);
-        glVertex2f(0, 12);
-        glVertex2f(75, 12);
-        glVertex2f(75, 0);
+// create circle for wave
+void wave(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
+{
+    int i=0;
+    float angle;
+    GLfloat PI = 3.1416;
+    glBegin(GL_POLYGON);
+    glVertex2f(x,y);
+    for(i=0;i<=180;i++)
+    {
+        angle = i*PI /180;
+        glVertex2f(x+(cos(angle)*rx),y+(sin(angle)*ry));
+    }
+    glEnd();
+}
 
-        glEnd();
+void sky(){
+    //Sky
+    glBegin(GL_QUADS);
+       glColor3f(0.58, 0.97,1);
+    glVertex3f(-100,100, 0);
+        glColor3f(0.01, 0.35, 1);
+    glVertex3f(100.0,100.0,0);
+        glColor3f(0.33, 0.55, 1);
+    glVertex3f(100.0,0.-6,0.0);
+        glColor3f(0.54, 0.68, 0.95);
+    glVertex3f(-100.0,-2,0);
+    glEnd();
 
-        //boat trapezium
-        glColor3f(1.0, 0.0, 0.0);
-        glBegin(GL_POLYGON);
-        glVertex2f(22 + shift, 20);
-        glVertex2f(2 + shift, 20);
-        glVertex2f(7 + shift, 10);
-        glVertex2f(17 + shift, 10);
+    //Grass
+    glBegin(GL_QUADS);
+       glColor3f(0.17, 0.49, 0);
+    glVertex3f(-100.0,-15.0,0);
+    glVertex3f(100.0,-15.0,0.0);
+     glVertex3f(100.0,-5.0,0.0);
+    glVertex3f(-100.0,0.0,0);
+    glEnd();
 
-        glEnd();
+        glBegin(GL_QUADS);
+       glColor3f(0.17, 0.49, 0);
+    glVertex3f(-100.0,-5.0,0);
+    glVertex3f(100.0,-5.0,0.0);
+     glVertex3f(100.0,-7.0,0.0);
+    glVertex3f(-100.0,-10.0,0);
+    glEnd();
 
-        //black stick
-        glColor3f(0.160, 0.658, 0.203);
-        glBegin(GL_POLYGON);
-        glVertex2f(12 + shift, 30);
-        glVertex2f(12 + shift, 25);
-        glVertex2f(9 + shift, 25.019);
-
-        glEnd();
-
-        // fourth regular shape is octagon
-        glColor3f(0.0, 0.0, 0.0);
-        glBegin(GL_POLYGON);
-        glVertex2f(12 + shift, 25.0);
-        glVertex2f(12 + shift, 20);
-        glVertex2f(11 + shift, 20);
-        glVertex2f(11 + shift, 25);
+    //sea beach
+    glBegin(GL_QUADS);
+       glColor3f(0.89, 0.89, 0.89);
+    glVertex3f(-100.0,-10.0,0);
+    glVertex3f(100.0,-5.0,0.0);
+     glColor3f(1, 1, 1);
+    glVertex3f(100.0,-40.0,0);
+    glVertex3f(-100.0,-40.0,0.0);
+    glEnd();
 
 
-        glEnd();
+//sea water BOTTOM
+    glBegin(GL_QUADS);
+     glColor3f(0, 0.64, 0.97);
+    glVertex3f(-100.0,-80.0,0);
+    glVertex3f(100.0,-80.0,0.0);
+     glColor3f(0, 0.53, 0.8);
+    glVertex3f(100.0,-100.0,0.0);
+    glVertex3f(-100.0,-100.0,0.0);
+    glEnd();
 
-	glutSwapBuffers();
+
+//sea water MIDDLE
+    glBegin(GL_QUADS);
+           glColor3f(0.16, 0.72, 1);
+    glVertex3f(-100.0,-60.0,0);
+    glVertex3f(100.0,-60.0,0.0);
+         glColor3f(0, 0.64, 0.97);
+    glVertex3f(100.0,-80.0,0);
+    glVertex3f(-100.0,-80.0,0.0);
+    glEnd();
+
+    //wave Left
+    glColor3f(0.51, 0.83, 1);
+    wave(50,15,w-100.0,-50.0);
+
+
+
+//wave middle
+        glColor3f(0.51, 0.83, 1);
+    wave(50,15,w-3,-52.0);
+
+
+//wave Right
+    glColor3f(0.51, 0.83, 1);
+    wave(35,15,w+90.0,-50.0);
+
+
+//sea water UP
+    glBegin(GL_QUADS);
+       glColor3f(0.51, 0.83, 1);
+    glVertex3f(-100.0,-40.0,0);
+    glVertex3f(100.0,-40.0,0.0);
+     glColor3f(0.16, 0.72, 1);
+    glVertex3f(100.0,-60.0,0);
+    glVertex3f(-100.0,-60.0,0.0);
+    glEnd();
+//Island
+    glColor3f(0.89, 0.89, 0.89);
+
+
+
+//Boat
+   glBegin(GL_QUADS);
+       glColor3f(1,1, 1);
+    glVertex3f(b-80.0,-70.0,0);
+    glVertex3f(b-60.0,-70.0,0.0);
+     glVertex3f(b-64.0,-75.0,0.0);
+    glVertex3f(b-79.0,-75.0,0);
+    glEnd();
+
+    glutPostRedisplay();
+    glFlush();
 }
 
 
+
 void newDisplay(){
-    init();
-    glutInitWindowPosition(20,20);
-    glutInitWindowSize(1920,1080);
-    glutFullScreen();
     glClear(GL_COLOR_BUFFER_BIT);
-    while(shift!=24){
-        drawing_moving_boats();
-        shift=shift+1;
-        delay(200);
-    }
+    sky();
+    glEnd();
+    glFlush();
     glEnd();
     glFlush();
 }
@@ -111,7 +209,13 @@ void mousenew(int button, int state, int x, int y)
             if(flag==1)
             {
                 printf("2");
+                glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
+                glutInitWindowPosition(10,10);
+                glutInitWindowSize(1920,1080);
+                glutFullScreen();
                 glutCreateWindow("Island View");
+                initDesign();
+                glutFullScreen();
                 glutDisplayFunc(newDisplay);
             }
         }
@@ -196,7 +300,7 @@ int main(int argc, char**argv)
 {
     glutInit(&argc,argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-    glutInitWindowPosition(20,20);
+    glutInitWindowPosition(10,0);
     glutInitWindowSize(1920,1080);
     glutCreateWindow("The Island");
     init();
