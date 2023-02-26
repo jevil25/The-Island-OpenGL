@@ -260,18 +260,23 @@ void newDisplay(){
 }
 
 // Mouse click event handler function
+void keyboard(unsigned char key,int x, int y){
+    if(key == 'e' || key == 'E'){
+        exit(0);
+    }
+}
+
 void mousenew(int button, int state, int x, int y)
 {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
             //printf("Inside the button\n");
-            printf("%d  %d\n",x,y);
+            //printf("%d  %d\n",x,y);
         // Check if the mouse is inside the rectangle
         if (x >= 563 && x <= 691 && y >= 460 && y <= 517) {
             // Call function to create a new window
-            printf("New window Created");
+            //printf("New window Created");
             if(flag==1)
             {
-                printf("2");
                 glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
                 glutInitWindowPosition(0,0);
                 glutInitWindowSize(2200,1200);
@@ -280,6 +285,7 @@ void mousenew(int button, int state, int x, int y)
                 initDesign();
                 glutFullScreen();
                 glutDisplayFunc(newDisplay);
+                glutKeyboardFunc(keyboard);
             }
         }
     }
@@ -324,7 +330,7 @@ void mouse(int button, int state, int x, int y)
         // Check if the mouse is inside the rectangle
         if (x >= 563 && x <= 691 && y >= 460 && y <= 517) {
             // Call function to create a new window
-            printf("New window Created");
+            //printf("New window Created");
             if(flag==0){
                 glutInitWindowPosition(10,0);
                 glutInitWindowSize(2020,1080);
