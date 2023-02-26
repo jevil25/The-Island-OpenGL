@@ -17,11 +17,15 @@
 	<GL/glu.h>
 	<stdlib.h>
 
-1677320756 source:c:\users\aaron\onedrive\desktop\github\the island-opengl\main.cpp
+1677328449 source:c:\users\aaron\onedrive\desktop\github\the island-opengl\main.cpp
 	<windows.h>
 	<GL/freeglut.h>
 	<stdio.h>
 	<ctime>
+	<GLUT/glut.h>
+	<GL/glut.h>
+	<math.h>
+	<stdlib.h>
 
 1676700847 c:\program files\codeblocks\mingw\include\gl\freeglut.h
 	"freeglut_std.h"

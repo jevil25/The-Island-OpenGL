@@ -64,6 +64,53 @@ void displayText(char *text,int length,int x,int y){
     }
 }
 
+// create circle for left sail
+void sailL(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
+{
+    int i=0;
+    float angle;
+    GLfloat PI = 3.1416;
+    glBegin(GL_POLYGON);
+    glVertex2f(x,y);
+    for(i=90;i<=180;i++)
+    {
+        angle = i*PI /180;
+        glVertex2f(x+(cos(angle)*rx),y+(sin(angle)*ry));
+    }
+    glEnd();
+}
+// create circle for right sail
+void sailR(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
+{
+    int i=0;
+    float angle;
+    GLfloat PI = 3.1416;
+    glBegin(GL_POLYGON);
+    glVertex2f(x,y);
+    for(i=90;i>=0;i--)
+    {
+        angle = i*PI /180;
+        glVertex2f(x+(cos(angle)*rx),y+(sin(angle)*ry));
+    }
+    glEnd();
+}
+
+// create circle for sun
+void sun(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
+{
+    int i=0;
+    float angle;
+    GLfloat PI = 3.1416;
+    glBegin(GL_POLYGON);
+    glVertex2f(x,y);
+    for(i=0;i<=360;i++)
+    {
+        angle = i*PI /180;
+        glVertex2f(x+(cos(angle)*rx),y+(sin(angle)*ry));
+    }
+    glEnd();
+}
+
 // create circle for wave
 void wave(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
 {
@@ -92,6 +139,10 @@ void sky(){
         glColor3f(0.54, 0.68, 0.95);
     glVertex3f(-100.0,-2,0);
     glEnd();
+
+    //sun
+    glColor3f(1, 0.36, 0);
+    sun(12,20,s-30.0,70.0);
 
     //Grass
     glBegin(GL_QUADS);
@@ -170,16 +221,28 @@ void sky(){
 //Island
     glColor3f(0.89, 0.89, 0.89);
 
-
-
 //Boat
    glBegin(GL_QUADS);
        glColor3f(1,1, 1);
-    glVertex3f(b-80.0,-70.0,0);
-    glVertex3f(b-60.0,-70.0,0.0);
-     glVertex3f(b-64.0,-75.0,0.0);
-    glVertex3f(b-79.0,-75.0,0);
+    glVertex3f(b-40.0,-70.0,0);
+    glVertex3f(b-20.0,-70.0,0.0);
+     glVertex3f(b-24.0,-75.0,0.0);
+    glVertex3f(b-39.0,-75.0,0);
     glEnd();
+
+    //sail bamboo
+   glBegin(GL_QUADS);
+       glColor3f(0.49, 0.32, 0.21);
+    glVertex3f(b-71.0,-44.0,0);
+    glVertex3f(b-71.5,-44.0,0.0);
+     glVertex3f(b-71.5,-70.0,0.0);
+    glVertex3f(b-71.0,-70.0,0);
+    glEnd();
+
+    //sail
+    glColor3f(0.9, 0.9, 0.9);
+    sailL(2,22,b-31.5,-69.0);
+    sailR(3,25,b-31.0,-69.0);
 
     glutPostRedisplay();
     glFlush();
@@ -210,8 +273,8 @@ void mousenew(int button, int state, int x, int y)
             {
                 printf("2");
                 glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
-                glutInitWindowPosition(10,10);
-                glutInitWindowSize(1920,1080);
+                glutInitWindowPosition(0,0);
+                glutInitWindowSize(2200,1200);
                 glutFullScreen();
                 glutCreateWindow("Island View");
                 initDesign();
@@ -238,10 +301,8 @@ void Button(char next[],int next_length){
 }
 
 void newDisplaySmall(){
+    glutFullScreen();
     init();
-    glutInitWindowPosition(20,20);
-    glutInitWindowSize(960,540);
-    glClear(GL_COLOR_BUFFER_BIT);
     glutMouseFunc(mousenew);
     char descrip[]="The island is surrounded by clear blue water that sparkles in the sunlight. On the beach, a small village with a few huts is visible, scattered around a central square. In the middle of the square is a small hut made of straw and wood. Further up the beach, a lighthouse stands tall and proud, with its beam of light sweeping across the sea. You can see the figure of a lighthouse keeper inside, tending to the light and watching for ships in the distance. The lighthouse is an important landmark on the island, guiding sailors safely to shore. As you leave the island, you realize that it's a special place, a hidden gem in the vast expanse of the sea. You feel lucky to have had the chance to visit, and you vow to return someday, to soak up more of its beauty and charm.";
     int despLen=372;
@@ -259,13 +320,14 @@ void mouse(int button, int state, int x, int y)
 {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
             //printf("Inside the button\n");
-            printf("%d  %d\n",x,y);
+            //printf("%d  %d\n",x,y);
         // Check if the mouse is inside the rectangle
         if (x >= 563 && x <= 691 && y >= 460 && y <= 517) {
             // Call function to create a new window
             printf("New window Created");
             if(flag==0){
-                printf("1");
+                glutInitWindowPosition(10,0);
+                glutInitWindowSize(2020,1080);
                 glutCreateWindow("Island Description");
                 glutDisplayFunc(newDisplaySmall);
                 flag=1;
