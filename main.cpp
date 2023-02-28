@@ -139,57 +139,101 @@ void wave(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
     glEnd();
 }
 
+//circles
+void circle(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
+{
+    int i=0;
+    float angle;
+    GLfloat PI = 3.1416;
+    glBegin(GL_POLYGON);
+    glVertex2f(x,y);
+    for(i=0;i<=360;i++)
+    {
+        angle = i*PI /180;
+        glVertex2f(x+(cos(angle)*rx),y+(sin(angle)*ry));
+    }
+    glEnd();
+}
+
+
 //lighthouse
-void lightHouse()
+void lightHouse(int x,int y)
 {
     // Draw the lighthouse body
     glColor3f(1.0f, 0.0f, 0.0f); // Red
     glBegin(GL_POLYGON);
-    glVertex2f(-5, -5);
-    glVertex2f(-5, 5);
-    glVertex2f(5, 5);
-    glVertex2f(5, -5);
+    glVertex2f(-5+x, -5+y);
+    glVertex2f(-5+x, 5+y);
+    glVertex2f(5+x, 5+y);
+    glVertex2f(5+x, -5+y);
     glEnd();
 
     glColor3f(1.0f, 1.0f, 1.0f); // White
     glBegin(GL_POLYGON);
-    glVertex2f(-5, 5);
-    glVertex2f(-5, 15);
-    glVertex2f(5, 15);
-    glVertex2f(5, 5);
+    glVertex2f(-5+x, 5+y);
+    glVertex2f(-5+x, 15+y);
+    glVertex2f(5+x, 15+y);
+    glVertex2f(5+x, 5+y);
     glEnd();
 
     glColor3f(1.0f, 0.0f, 0.0f); // Red
     glBegin(GL_POLYGON);
-    glVertex2f(-5, 15);
-    glVertex2f(-5, 25);
-    glVertex2f(5, 25);
-    glVertex2f(5, 15);
+    glVertex2f(-5+x, 15+y);
+    glVertex2f(-5+x, 25+y);
+    glVertex2f(5+x, 25+y);
+    glVertex2f(5+x, 15+y);
     glEnd();
 
     glColor3f(1.0f, 1.0f, 1.0f); // White
     glBegin(GL_POLYGON);
-    glVertex2f(-5, 25);
-    glVertex2f(-5, 35);
-    glVertex2f(5, 35);
-    glVertex2f(5, 25);
+    glVertex2f(-5+x, 25+y);
+    glVertex2f(-5+x, 35+y);
+    glVertex2f(5+x, 35+y);
+    glVertex2f(5+x, 25+y);
     glEnd();
 
 
     // Draw the lighthouse top
-    glColor3f(1.0f, 0.0f, 0.0f); // Red
+    glColor3f(0.0f, 0.0f, 0.0f); // Black
     glBegin(GL_POLYGON);
-    glVertex2f(-3, 35);
-    glVertex2f(-3, 40);
-    glVertex2f(3, 40);
-    glVertex2f(3, 35);
+    glVertex2f(-3+x, 35+y);
+    glVertex2f(-3+x, 40+y);
+    glVertex2f(3+x, 40+y);
+    glVertex2f(3+x, 35+y);
     glEnd();
 
+    //door
+    glBegin(GL_POLYGON);
+    glVertex2f(-1.75+(float)x,-5+y);
+    glVertex2f(-1.75+(float)x,0+y);
+    glVertex2f(1.75+(float)x,0+y);
+    glVertex2f(1.75+(float)x,-5+y);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+    float angle;
+    int i;
+    GLfloat PI = 3.1416;
+    glBegin(GL_POLYGON);
+    glVertex2f(-1.25+(float)x,0+y);
+    for(i=0;i<=180;i++)
+    {
+        angle = i*PI /180;
+        glVertex2f(x+(cos(angle)*2),y+(sin(angle)*2));
+    }
+    glEnd();
+
+    // circles
+    circle(1,1,x,y+10);
+    circle(1,1,x,y+20);
+    circle(1,1,x,y+30);
+
     // Draw the lighthouse roof
+    glColor3f(1.0f, 0.0f, 0.0f); // Red
     glBegin(GL_TRIANGLES);
-    glVertex2f(-3, 40);
-    glVertex2f(3, 40);
-    glVertex2f(0.0, 43);
+    glVertex2f(-3+x, 40+y);
+    glVertex2f(3+x, 40+y);
+    glVertex2f(0.0+x, 43+y);
     glEnd();
 
     glFlush();
@@ -313,7 +357,7 @@ void sky(){
     sailR(3,25,b-31.0,-69.0);
 
     //lighthouse
-    lightHouse();
+    lightHouse(50,0);
 
     glutPostRedisplay();
     glFlush();
