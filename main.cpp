@@ -50,18 +50,19 @@ void disableInput() {
 }
 
 //used to display texts
-void displayText(char *text,int length,int x,int y){
-    int i,len=0;
-    float dx=0;
+void displayText(char *text,float length,float x,float y){
+    int i;
+    float len=0,dx=0,x1;
+    x1=(float)x;
     for(i=0;i<length;i++){
-            if(len==88){
+            if(len>=60){
                 y=y-2;
-                x=x-44;
+                x1=x1-42;
                 len=0;
             }
-            glRasterPos2f((float)x+dx,y);
-            dx+=0.5;
-            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,text[i]);
+            glRasterPos2f(x1+dx,y);
+            dx+=0.7;
+            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,text[i]);
             len++;
     }
 }
@@ -303,7 +304,7 @@ void Button(char next[],int next_length){
     glVertex2f(27,14);
     glEnd();
     glColor3b(0,0,0);
-    displayText(next,next_length,22.5,15.75);
+    displayText(next,next_length,23.3,15.7);
     glFlush();
     glEnd();
 }
@@ -347,22 +348,22 @@ void mouse(int button, int state, int x, int y)
 //main display and entry function
 //add all components as functions here to display
 void drawMyDesign(){
-    char ajn[]="Aaron Jevil Nazareth   4nm20cs005";
-    char afd[]="Aaron Francis Dsouza   4nm20cs004";
+    char ajn[]="Aaron Jevil Nazareth            4nm20cs005";
+    char afd[]="Aaron Francis Dsouza            4nm20cs004";
     char sirs[]="Guided by:";
     char sir1[]="Dr. PRADEEP KANCHAN";
     char sir2[]="Mr. PUNEETH R P";
     char projectName[]=" The Island";
-    int i,name_usn_length=33, projectName_length=11,sirs_length=10,sir1_length=19,sir2_length=15;
+    int i,name_usn_length=42, projectName_length=11,sirs_length=10,sir1_length=19,sir2_length=15;
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3b(254, 126, 159);
-    displayText(projectName,projectName_length,19,32);
+    displayText(projectName,projectName_length,19,42);
     glColor3b(127,127,127);
-    displayText(ajn,name_usn_length,10,27);
-    displayText(afd,name_usn_length,10,25);
-    displayText(sirs,sirs_length,10,23);
-    displayText(sir1,sir1_length,10,21);
-    displayText(sir2,sir2_length,10,19);
+    displayText(ajn,name_usn_length,8,35);
+    displayText(afd,name_usn_length,8,30);
+    displayText(sirs,sirs_length,8,25);
+    displayText(sir1,sir1_length,8,23);
+    displayText(sir2,sir2_length,8,21);
     Button("Next",5);
 }
 
