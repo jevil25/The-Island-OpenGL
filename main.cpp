@@ -27,7 +27,7 @@ float h1=75.0; // Global Variable for sun.
 int shift=0,flag=0;
 //basic settings
 void init(void){
-    glClearColor(0,0,0.6,1);
+    glClearColor(0.82,0.63,0.41,1);
     glMatrixMode(GL_PROJECTION);
     glOrtho(0,50,0,50,0,10);
 }
@@ -98,6 +98,15 @@ void sailR(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
     glEnd();
 }
 
+//for lines
+void drawLine(GLfloat x1,GLfloat y1,GLfloat x2,GLfloat y2)
+{
+    glBegin(GL_LINES);
+    glVertex2f(x1,y1);
+    glVertex2f(x2,y2);
+    glEnd();
+}
+
 // create circle for sun
 void sun(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
 {
@@ -128,6 +137,62 @@ void wave(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
         glVertex2f(x+(cos(angle)*rx),y+(sin(angle)*ry));
     }
     glEnd();
+}
+
+//lighthouse
+void lightHouse()
+{
+    // Draw the lighthouse body
+    glColor3f(1.0f, 0.0f, 0.0f); // Red
+    glBegin(GL_POLYGON);
+    glVertex2f(-5, -5);
+    glVertex2f(-5, 5);
+    glVertex2f(5, 5);
+    glVertex2f(5, -5);
+    glEnd();
+
+    glColor3f(1.0f, 1.0f, 1.0f); // White
+    glBegin(GL_POLYGON);
+    glVertex2f(-5, 5);
+    glVertex2f(-5, 15);
+    glVertex2f(5, 15);
+    glVertex2f(5, 5);
+    glEnd();
+
+    glColor3f(1.0f, 0.0f, 0.0f); // Red
+    glBegin(GL_POLYGON);
+    glVertex2f(-5, 15);
+    glVertex2f(-5, 25);
+    glVertex2f(5, 25);
+    glVertex2f(5, 15);
+    glEnd();
+
+    glColor3f(1.0f, 1.0f, 1.0f); // White
+    glBegin(GL_POLYGON);
+    glVertex2f(-5, 25);
+    glVertex2f(-5, 35);
+    glVertex2f(5, 35);
+    glVertex2f(5, 25);
+    glEnd();
+
+
+    // Draw the lighthouse top
+    glColor3f(1.0f, 0.0f, 0.0f); // Red
+    glBegin(GL_POLYGON);
+    glVertex2f(-3, 35);
+    glVertex2f(-3, 40);
+    glVertex2f(3, 40);
+    glVertex2f(3, 35);
+    glEnd();
+
+    // Draw the lighthouse roof
+    glBegin(GL_TRIANGLES);
+    glVertex2f(-3, 40);
+    glVertex2f(3, 40);
+    glVertex2f(0.0, 43);
+    glEnd();
+
+    glFlush();
 }
 
 void sky(){
@@ -247,6 +312,9 @@ void sky(){
     sailL(2,22,b-31.5,-69.0);
     sailR(3,25,b-31.0,-69.0);
 
+    //lighthouse
+    lightHouse();
+
     glutPostRedisplay();
     glFlush();
 }
@@ -296,7 +364,6 @@ void mousenew(int button, int state, int x, int y)
 
 //draws next button
 void Button(char next[],int next_length){
-    glColor3b(127,127,127);
     glBegin(GL_POLYGON);
     glVertex2f(22,14);
     glVertex2f(22,18);
@@ -312,10 +379,14 @@ void Button(char next[],int next_length){
 void newDisplaySmall(){
     glutFullScreen();
     init();
+    glClearColor(0.82,0.63,0.41,1);
     glutMouseFunc(mousenew);
-    char descrip[]="The island is surrounded by clear blue water that sparkles in the sunlight. On the beach, a small village with a few huts is visible, scattered around a central square. In the middle of the square is a small hut made of straw and wood. Further up the beach, a lighthouse stands tall and proud, with its beam of light sweeping across the sea. You can see the figure of a lighthouse keeper inside, tending to the light and watching for ships in the distance. The lighthouse is an important landmark on the island, guiding sailors safely to shore. As you leave the island, you realize that it's a special place, a hidden gem in the vast expanse of the sea. You feel lucky to have had the chance to visit, and you vow to return someday, to soak up more of its beauty and charm.";
-    int despLen=372;
-    displayText(descrip,despLen,2,40);
+    char title[]="DESCRIPTION";
+    int num=11;
+    displayText(title,num,20,47);
+    char descrip[]="The island is surrounded by clear blue water that sparkles in the sunlight. On the beach, a small village with a few huts is visible, scattered around a central square. In the middle of the square is a small hut made of straw and wood. Further up the beach, a lighthouse stands tall and proud, with its beam of light sweeping across the sea. You can see the figure of a lighthouse keeper inside, tending to the light and watching for ships in the distance. The lighthouse is an important landmark on the island, guiding sailors safely to shore. As you leave the island, you realize that it's a special place, a hidden gem in the vast expanse of the sea.";
+    int despLen=660;
+    displayText(descrip,despLen,3,43);
     glEnd();
     glFlush();
     Button("Next",5);
@@ -348,16 +419,17 @@ void mouse(int button, int state, int x, int y)
 //main display and entry function
 //add all components as functions here to display
 void drawMyDesign(){
-    char ajn[]="Aaron Jevil Nazareth            4nm20cs005";
-    char afd[]="Aaron Francis Dsouza            4nm20cs004";
+    char ajn[]="AARON JEVIL NAZARETH            4NM20CS005";
+    char afd[]="AARON FRANCIS DSOUZA            4NM20CS004";
     char sirs[]="Guided by:";
     char sir1[]="Dr. PRADEEP KANCHAN";
     char sir2[]="Mr. PUNEETH R P";
-    char projectName[]=" The Island";
+    char projectName[]=" THE ISLAND";
     int i,name_usn_length=42, projectName_length=11,sirs_length=10,sir1_length=19,sir2_length=15;
     glClear(GL_COLOR_BUFFER_BIT);
-    glColor3b(254, 126, 159);
-    displayText(projectName,projectName_length,19,42);
+    glColor3b(2, 200, 159);
+    displayText(projectName,projectName_length,20,42);
+    drawLine(20,41,29,41);
     glColor3b(127,127,127);
     displayText(ajn,name_usn_length,8,35);
     displayText(afd,name_usn_length,8,30);
