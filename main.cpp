@@ -55,13 +55,17 @@ void displayText(char *text,float length,float x,float y){
     float len=0,dx=0,x1;
     x1=(float)x;
     for(i=0;i<length;i++){
-            if(len>=60){
+            if(len>=70){
                 y=y-2;
                 x1=x1-42;
                 len=0;
             }
             glRasterPos2f(x1+dx,y);
-            dx+=0.7;
+            dx+=0.6;
+            if(text[i]=='2'){
+                glRasterPos2f(x1+dx,y);
+                dx+=0.4;
+            }
             glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,text[i]);
             len++;
     }
@@ -428,8 +432,9 @@ void newDisplaySmall(){
     char title[]="DESCRIPTION";
     int num=11;
     displayText(title,num,20,47);
-    char descrip[]="The island is surrounded by clear blue water that sparkles in the sunlight. On the beach, a small village with a few huts is visible, scattered around a central square. In the middle of the square is a small hut made of straw and wood. Further up the beach, a lighthouse stands tall and proud, with its beam of light sweeping across the sea. You can see the figure of a lighthouse keeper inside, tending to the light and watching for ships in the distance. The lighthouse is an important landmark on the island, guiding sailors safely to shore. As you leave the island, you realize that it's a special place, a hidden gem in the vast expanse of the sea.";
-    int despLen=660;
+    drawLine(20,46,27,46);
+    char descrip[]="The island is surrounded by clear blue water that sparkles in the sunlight. On the beach, a small village with a grasslands is visible, scattered around a central square. Further up the beach, a lighthouse stands tall and proud, with its beam of light sweeping across the sea. You can see the figure of a lighthouse keeper inside, tending to the light and watching for ships in the distance. The lighthouse is an important landmark on the island, guiding sailors safely to shore. As you leave the island, you realize that it's a special place, a hidden gem in the vast expanse of the sea.";
+    int despLen=590;
     displayText(descrip,despLen,3,43);
     glEnd();
     glFlush();
@@ -454,6 +459,7 @@ void mouse(int button, int state, int x, int y)
                 glutInitWindowSize(2020,1080);
                 glutCreateWindow("Island Description");
                 glutDisplayFunc(newDisplaySmall);
+                glutKeyboardFunc(keyboard);
                 flag=1;
             }
         }
@@ -468,8 +474,8 @@ void drawMyDesign(){
     char sirs[]="Guided by:";
     char sir1[]="Dr. PRADEEP KANCHAN";
     char sir2[]="Mr. PUNEETH R P";
-    char projectName[]=" THE ISLAND";
-    int i,name_usn_length=42, projectName_length=11,sirs_length=10,sir1_length=19,sir2_length=15;
+    char projectName[]=" VINLAND ISLAND";
+    int i,name_usn_length=42, projectName_length=15,sirs_length=10,sir1_length=19,sir2_length=15;
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3b(2, 200, 159);
     displayText(projectName,projectName_length,20,42);
@@ -494,6 +500,7 @@ int main(int argc, char**argv)
     glutFullScreen();
     glutDisplayFunc(drawMyDesign);
     glutMouseFunc(mouse);
+    glutKeyboardFunc(keyboard);
     glutMainLoop();
     return 0;
 }
