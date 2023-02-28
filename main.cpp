@@ -52,13 +52,15 @@ void disableInput() {
 //used to display texts
 void displayText(char *text,int length,int x,int y){
     int i,len=0;
+    float dx=0;
     for(i=0;i<length;i++){
-            if(len==44){
+            if(len==88){
                 y=y-2;
                 x=x-44;
                 len=0;
             }
-            glRasterPos2f(x+i,y);
+            glRasterPos2f((float)x+dx,y);
+            dx+=0.5;
             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,text[i]);
             len++;
     }
