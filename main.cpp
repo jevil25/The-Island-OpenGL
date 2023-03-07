@@ -67,7 +67,11 @@ void displayText(char *text,float length,float x,float y){
                 glRasterPos2f(x1+dx,y);
                 dx+=0.4;
             }
-
+            if(text[i]=='i' || text[i]=='I' || text[i]=='r'){
+                dx-=0.4;
+                glRasterPos2f(x1+dx,y);
+                dx+=0.4;
+            }
             glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,text[i]);
             len++;
     }
