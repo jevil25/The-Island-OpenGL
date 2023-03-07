@@ -63,9 +63,11 @@ void displayText(char *text,float length,float x,float y){
             glRasterPos2f(x1+dx,y);
             dx+=0.6;
             if(text[i]=='2'){
+                dx-=0.2;
                 glRasterPos2f(x1+dx,y);
                 dx+=0.4;
             }
+
             glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,text[i]);
             len++;
     }
@@ -441,7 +443,6 @@ void newDisplaySmall(){
     Button("Next",5);
     glEnd();
     glFlush();
-
 }
 
 // Mouse click event handler function
@@ -473,9 +474,11 @@ void drawMyDesign(){
     char afd[]="AARON FRANCIS DSOUZA            4NM20CS004";
     char sirs[]="Guided by:";
     char sir1[]="Dr. PRADEEP KANCHAN";
+    char sir1des[]="Assistant Professor Gd-III";
     char sir2[]="Mr. PUNEETH R P";
+    char sir2des[]="Assistant Professor Gd-II";
     char projectName[]=" VINLAND ISLAND";
-    int i,name_usn_length=42, projectName_length=15,sirs_length=10,sir1_length=19,sir2_length=15;
+    int i,name_usn_length=42, projectName_length=15,sirs_length=10,sir1_length=19,sir2_length=15,sir1des_length=26,sir2des_length=25;
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3b(2, 200, 159);
     displayText(projectName,projectName_length,20,42);
@@ -483,9 +486,11 @@ void drawMyDesign(){
     glColor3b(127,127,127);
     displayText(ajn,name_usn_length,8,35);
     displayText(afd,name_usn_length,8,30);
-    displayText(sirs,sirs_length,8,25);
+    displayText(sirs,sirs_length,20,25);
     displayText(sir1,sir1_length,8,23);
-    displayText(sir2,sir2_length,8,21);
+    displayText(sir1des,sir1des_length,8,21);
+    displayText(sir2,sir2_length,26,23);
+    displayText(sir2des,sir2des_length,26,21);
     Button("Next",5);
 }
 
