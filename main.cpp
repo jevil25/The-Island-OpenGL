@@ -10,18 +10,18 @@
 #include <math.h>
 #include <stdlib.h>
 
-float s=-40.0; // Global Variable for sun.
-float m=190.0; // Global Variable for moon.
-float c=200.0; // Global Variable for cloud.
-float cs=300.0; // Global Variable for small cloud.
-float cl=400.0; // Global Variable for last cloud.
-float w=-20.0; // Global Variable for wave.
-float b=-30.0; // Global Variable for boat.
-float sh=200.0; // Global Variable for ship.
+float sun=-40.0; // Global Variable for sun.
+float moon=190.0; // Global Variable for moon.
+float cloud=200.0; // Global Variable for cloud.
+float smallCloud=300.0; // Global Variable for small cloud.
+float lastCloud=400.0; // Global Variable for last cloud.
+float wave=-20.0; // Global Variable for wave.
+float boat=-30.0; // Global Variable for boat.
+float ship=200.0; // Global Variable for ship.
 float car=150.0; // Global Variable for car.
-float h=40.0; // Global Variable for human.
-float h2=-12.0; // Global Variable for human.
-float ball=0; // Global Variable for Football.
+float human=40.0; // Global Variable for human.
+float secondHuman=-12.0; // Global Variable for human.
+float football=0; // Global Variable for Football.
 float h1=75.0; // Global Variable for sun.
 
 int shift=0,flag=0;
@@ -118,7 +118,7 @@ void drawLine(GLfloat x1,GLfloat y1,GLfloat x2,GLfloat y2)
 }
 
 // create circle for sun
-void sun(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
+void sunFunc(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
 {
     int i=0;
     float angle;
@@ -134,7 +134,7 @@ void sun(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
 }
 
 // create circle for wave
-void wave(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
+void waveFunc(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
 {
     int i=0;
     float angle;
@@ -285,6 +285,7 @@ void shop(int x,int y){
     glVertex2d(x+24,y+12);
     glEnd();
 
+    glColor3f(0, 0, 0); // black
     circle(1.5,1.5,x+2,y);
     circle(1.5,1.5,x+18,y);
 
@@ -309,7 +310,7 @@ void sky(){
 
     //sun
     glColor3f(1, 0.36, 0);
-    sun(12,20,s-30.0,70.0);
+    sunFunc(12,20,sun-30.0,70.0);
 
     //Grass
     glBegin(GL_QUADS);
@@ -362,18 +363,18 @@ void sky(){
 
     //wave Left
     glColor3f(0.51, 0.83, 1);
-    wave(50,15,w-100.0,-50.0);
+    waveFunc(50,15,wave-100.0,-50.0);
 
 
 
 //wave middle
         glColor3f(0.51, 0.83, 1);
-    wave(50,15,w-3,-52.0);
+    waveFunc(50,15,wave-3,-52.0);
 
 
 //wave Right
     glColor3f(0.51, 0.83, 1);
-    wave(35,15,w+90.0,-50.0);
+    waveFunc(35,15,wave+90.0,-50.0);
 
 
 //sea water UP
@@ -391,25 +392,25 @@ void sky(){
 //Boat
    glBegin(GL_QUADS);
        glColor3f(1,1, 1);
-    glVertex3f(b-40.0,-70.0,0);
-    glVertex3f(b-20.0,-70.0,0.0);
-     glVertex3f(b-24.0,-75.0,0.0);
-    glVertex3f(b-39.0,-75.0,0);
+    glVertex3f(boat-40.0,-70.0,0);
+    glVertex3f(boat-20.0,-70.0,0.0);
+     glVertex3f(boat-24.0,-75.0,0.0);
+    glVertex3f(boat-39.0,-75.0,0);
     glEnd();
 
     //sail bamboo
    glBegin(GL_QUADS);
        glColor3f(0.49, 0.32, 0.21);
-    glVertex3f(b-71.0,-44.0,0);
-    glVertex3f(b-71.5,-44.0,0.0);
-     glVertex3f(b-71.5,-70.0,0.0);
-    glVertex3f(b-71.0,-70.0,0);
+    glVertex3f(boat-71.0,-44.0,0);
+    glVertex3f(boat-71.5,-44.0,0.0);
+     glVertex3f(boat-71.5,-70.0,0.0);
+    glVertex3f(boat-71.0,-70.0,0);
     glEnd();
 
     //sail
     glColor3f(0.9, 0.9, 0.9);
-    sailL(2,22,b-31.5,-69.0);
-    sailR(3,25,b-31.0,-69.0);
+    sailL(2,22,boat-31.5,-69.0);
+    sailR(3,25,boat-31.0,-69.0);
 
     shop(60,-20);
 
