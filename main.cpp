@@ -249,6 +249,51 @@ void lightHouse(int x,int y)
     glFlush();
 }
 
+//shops
+void shop(int x,int y){
+    char text1[]="C   O   C   O";
+    // Draw the shop body
+    glColor3f(0.96f, 0.87f, 0.70f); // brown
+    glBegin(GL_POLYGON);
+    glVertex2d(x,y);
+    glVertex2d(x,y+10);
+    glVertex2d(x+20,y+10);
+    glVertex2d(x+20,y);
+    glEnd();
+
+    glColor3f(0, 0, 0); // black
+    displayText(text1,14,x+5,y+2.5);
+
+    glLineWidth(5);
+    glBegin(GL_LINES);
+    glVertex2f(x+0.3,y+10);
+    glVertex2f(x+0.3,y+16);
+    glEnd();
+
+    glBegin(GL_LINES);
+    glVertex2d(x+19.6,y+10);
+    glVertex2d(x+19.6,y+16);
+    glEnd();
+
+    glBegin(GL_LINES);
+    glVertex2d(x-4,y+12);
+    glVertex2d(x+10,y+28);
+    glEnd();
+
+    glBegin(GL_LINES);
+    glVertex2d(x+10,y+28);
+    glVertex2d(x+24,y+12);
+    glEnd();
+
+    circle(1.5,1.5,x+2,y);
+    circle(1.5,1.5,x+18,y);
+
+    //lighthouse
+    lightHouse(50,0);
+
+    glFlush();
+}
+
 void sky(){
     //Sky
     glBegin(GL_QUADS);
@@ -366,8 +411,7 @@ void sky(){
     sailL(2,22,b-31.5,-69.0);
     sailR(3,25,b-31.0,-69.0);
 
-    //lighthouse
-    lightHouse(50,0);
+    shop(60,-20);
 
     glutPostRedisplay();
     glFlush();
