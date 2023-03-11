@@ -10,22 +10,23 @@
 #include <math.h>
 #include <stdlib.h>
 
-float sun=-40.0; // Global Variable for sun.
-float moon=190.0; // Global Variable for moon.
-float cloud=200.0; // Global Variable for cloud.
-float smallCloud=300.0; // Global Variable for small cloud.
-float lastCloud=400.0; // Global Variable for last cloud.
-float wave=-20.0; // Global Variable for wave.
-float boat=-30.0; // Global Variable for boat.
-float ship=200.0; // Global Variable for ship.
-float car=150.0; // Global Variable for car.
-float human=40.0; // Global Variable for human.
-float secondHuman=-12.0; // Global Variable for human.
-float football=0; // Global Variable for Football.
-float h1=75.0; // Global Variable for sun.
+float sun=-40.0;                    // Global Variable for sun.
+float moon=190.0;                   // Global Variable for moon.
+float cloud=200.0;                  // Global Variable for cloud.
+float smallCloud=300.0;             // Global Variable for small cloud.
+float lastCloud=400.0;              // Global Variable for last cloud.
+float wave=-20.0;                   // Global Variable for wave.
+float boat=-30.0;                   // Global Variable for boat.
+float ship=200.0;                   // Global Variable for ship.
+float car=150.0;                    // Global Variable for car.
+float secondHuman=-12.0;            // Global Variable for human.
+float football=0;                   // Global Variable for Football.
+float h1=75.0;                      // Global Variable for sun.
 
 int shift=0,flag=0;
-//basic settings
+
+/*basic settings*/
+
 void init(void){
     glClearColor(0.82,0.63,0.41,1);
     glMatrixMode(GL_PROJECTION);
@@ -149,6 +150,57 @@ void waveFunc(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
     glEnd();
 }
 
+void humanFunc(float humanx,float humany)
+{
+        //MAN LEFT
+//man head
+       glColor3f(1, 0.76, 0.41);
+    sunFunc(1.5,1.5,humanx-80.0,humany-20.5);
+
+//LEFT man chest
+    glBegin(GL_QUADS);
+       glColor3f(1, 0.76, 0.41);
+    glVertex3f(humanx-83.0,humany-22.0,0);
+    glVertex3f(humanx-77.0,humany-22.0,0.0);
+    glVertex3f(humanx-77.0,humany-28.0,0);
+    glVertex3f(humanx-83.0,humany-28.0,0.0);
+    glEnd();
+//LEFT man left arms
+    glBegin(GL_LINES);
+       glColor3f(0.0, 0.0, 0);
+    glVertex3f(humanx-82.0,humany-24.0,0);
+    glVertex3f(humanx-82.0,humany-28.0,0.0);
+    glEnd();
+//LEFT man right arms
+    glBegin(GL_LINES);
+       glColor3f(0.0, 0.0, 0);
+    glVertex3f(humanx-78.0,humany-24.0,0);
+    glVertex3f(humanx-78.0,humany-28.0,0.0);
+    glEnd();
+//LEFT man pent
+    glBegin(GL_QUADS);
+       glColor3f(1.0, 0.0, 0);
+    glVertex3f(humanx-82.0,humany-28.0,0);
+    glVertex3f(humanx-78.0,humany-28.0,0.0);
+    glVertex3f(humanx-78.0,humany-35.0,0);
+    glVertex3f(humanx-82.0,humany-35.0,0.0);
+    glEnd();
+//LEFT man legs
+    glBegin(GL_QUADS);
+       glColor3f(1, 0.76, 0.41);
+    glVertex3f(humanx-81.5,humany-35.0,0);
+    glVertex3f(humanx-78.5,humany-35.0,0.0);
+    glVertex3f(humanx-78.5,humany-38.0,0);
+    glVertex3f(humanx-81.5,humany-38.0,0.0);
+    glEnd();
+//LEFT man leg divider
+    glBegin(GL_LINES);
+       glColor3f(0.0, 0.0, 0);
+    glVertex3f(humanx-80.0,humany-32.0,0);
+    glVertex3f(humanx-80.0,humany-38.0,0.0);
+    glEnd();
+}
+
 //circles
 void circle(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
 {
@@ -252,6 +304,9 @@ void lightHouse(int x,int y)
 //shops
 void shop(int x,int y){
     char text1[]="C   O   C   O";
+
+    //shopkeeper
+    humanFunc(150,20);
     // Draw the shop body
     glColor3f(0.96f, 0.87f, 0.70f); // brown
     glBegin(GL_POLYGON);
