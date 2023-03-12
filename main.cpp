@@ -157,7 +157,31 @@ void humanFunc(float humanx,float humany)
        glColor3f(1, 0.76, 0.41);
     sunFunc(1.5,1.5,humanx-80.0,humany-20.5);
 
-//LEFT man chest
+//main hair
+    glColor3f(0,0,0);
+    glBegin(GL_QUADS);
+    glVertex2f(humanx-81.25,humany-19.25);
+    glVertex2f(humanx-81.25,humany-18);
+    glVertex2f(humanx-78.75,humany-18);
+    glVertex2f(humanx-78.75,humany-19.25);
+    glEnd();
+
+//man eyes
+    glColor3f(0,0,0);
+    glPointSize(2);
+    glBegin(GL_POINTS);
+    glVertex2f(humanx-80.75,humany-20);
+    glVertex2f(humanx-79.25,humany-20);
+    glEnd();
+
+//mans  mouth
+    glLineWidth(0.5f);
+    glBegin(GL_LINES);
+    glVertex2f(humanx-80.75,humany-21.5);
+    glVertex2f(humanx-79.25,humany-21.5);
+    glEnd();
+
+//man chest
     glBegin(GL_QUADS);
        glColor3f(1, 0.76, 0.41);
     glVertex3f(humanx-83.0,humany-22.0,0);
@@ -165,19 +189,30 @@ void humanFunc(float humanx,float humany)
     glVertex3f(humanx-77.0,humany-28.0,0);
     glVertex3f(humanx-83.0,humany-28.0,0.0);
     glEnd();
-//LEFT man left arms
-    glBegin(GL_LINES);
-       glColor3f(0.0, 0.0, 0);
-    glVertex3f(humanx-82.0,humany-24.0,0);
+//man t-shirt
+    glColor3f(0.0f, 0.0f, 1.0f); //red
+    glBegin(GL_QUADS);
+    glVertex3f(humanx-82.0,humany-22.0,0);
+    glVertex3f(humanx-78.0,humany-22.0,0.0);
+    glVertex3f(humanx-78.0,humany-28.0,0);
     glVertex3f(humanx-82.0,humany-28.0,0.0);
     glEnd();
-//LEFT man right arms
-    glBegin(GL_LINES);
-       glColor3f(0.0, 0.0, 0);
-    glVertex3f(humanx-78.0,humany-24.0,0);
-    glVertex3f(humanx-78.0,humany-28.0,0.0);
+
+    glBegin(GL_QUADS);
+    glVertex3f(humanx-83.0,humany-22.0,0);
+    glVertex3f(humanx-82.0,humany-22.0,0.0);
+    glVertex3f(humanx-82.0,humany-24.0,0);
+    glVertex3f(humanx-83.0,humany-24.0,0.0);
     glEnd();
-//LEFT man pent
+
+    glBegin(GL_QUADS);
+    glVertex3f(humanx-77.0,humany-22.0,0);
+    glVertex3f(humanx-78.0,humany-22.0,0.0);
+    glVertex3f(humanx-78.0,humany-24.0,0);
+    glVertex3f(humanx-77.0,humany-24.0,0.0);
+    glEnd();
+
+//man pent
     glBegin(GL_QUADS);
        glColor3f(1.0, 0.0, 0);
     glVertex3f(humanx-82.0,humany-28.0,0);
@@ -185,7 +220,7 @@ void humanFunc(float humanx,float humany)
     glVertex3f(humanx-78.0,humany-35.0,0);
     glVertex3f(humanx-82.0,humany-35.0,0.0);
     glEnd();
-//LEFT man legs
+//man legs
     glBegin(GL_QUADS);
        glColor3f(1, 0.76, 0.41);
     glVertex3f(humanx-81.5,humany-35.0,0);
@@ -193,7 +228,7 @@ void humanFunc(float humanx,float humany)
     glVertex3f(humanx-78.5,humany-38.0,0);
     glVertex3f(humanx-81.5,humany-38.0,0.0);
     glEnd();
-//LEFT man leg divider
+//man leg divider
     glBegin(GL_LINES);
        glColor3f(0.0, 0.0, 0);
     glVertex3f(humanx-80.0,humany-32.0,0);
