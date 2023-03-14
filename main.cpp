@@ -152,6 +152,34 @@ void waveFunc(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
     glEnd();
 }
 
+void hut(float x,float y,float x1,float y1){
+    glBegin(GL_POLYGON);
+    //body
+    glColor3b(87,59,53);
+    glVertex2f(x,y);
+    glVertex2f(x,y+y1);
+    glVertex2f(x+x1,y+y1);
+    glVertex2f(x+x1,y);
+    glEnd();
+
+    //roof
+    glColor3b(102,51,42);
+    glBegin(GL_TRIANGLES);
+    glVertex2f(x-2,y+y1);
+    glVertex2f(x+(x1/2),y+y1+(y1/2));
+    glVertex2f(x+x1+2,y+y1);
+    glEnd();
+
+    //door
+    glColor3b(0,0,0);
+    glBegin(GL_POLYGON);
+    glVertex2f(x+3,y-4+4);
+    glVertex2f(x+3,y+6+4);
+    glVertex2f(x+7,y+6+4);
+    glVertex2f(x+7,y-4+4);
+    glEnd();
+}
+
 void windmillFunc(float f,float x,float y){
     glBegin(GL_POLYGON);// Draw a Red 1x1 Square centered at origin
     glColor3ub(192,192,192);
@@ -236,6 +264,8 @@ void windmillFunc(float f,float x,float y){
 
     glPopMatrix();
     glEnd();
+
+    hut(-10,-5,10,15);
 }
 
 void humanFunc(float humanx,float humany)
