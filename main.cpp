@@ -10,6 +10,7 @@
 #include <math.h>
 #include <stdlib.h>
 
+float _angle1 = 0.0f;
 float sun=-40.0;                    // Global Variable for sun.
 float moon=190.0;                   // Global Variable for moon.
 float cloud=200.0;                  // Global Variable for cloud.
@@ -22,6 +23,7 @@ float car=150.0;                    // Global Variable for car.
 float secondHuman=-12.0;            // Global Variable for human.
 float football=0;                   // Global Variable for Football.
 float h1=75.0;                      // Global Variable for sun.
+float bladeAngle = 0.0f;            // Angle of the windmill blades in degrees
 
 int shift=0,flag=0;
 
@@ -147,6 +149,92 @@ void waveFunc(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
         angle = i*PI /180;
         glVertex2f(x+(cos(angle)*rx),y+(sin(angle)*ry));
     }
+    glEnd();
+}
+
+void windmillFunc(float f,float x,float y){
+    glBegin(GL_POLYGON);// Draw a Red 1x1 Square centered at origin
+    glColor3ub(192,192,192);
+    //glColor3ub(0,206,209);
+    float x1=-96,y1=-9;
+
+    glVertex2f(x1+x+f*31.0f,y1+y+f*2.0f);
+    glVertex2f(x1+x+f*30.0f,y1+y+f*-6.0f);
+    glVertex2f(x1+x+f*34.0f,y1+y+f*-6.0f);
+    glVertex2f(x1+x+f*33.0f,y1+y+f*2.0f);
+    glVertex2f(x1+x+f*32.5f,y1+y+f*3.0f);
+    glVertex2f(x1+x+f*31.5f,y1+y+f*3.0f);
+
+
+
+    glEnd();
+
+
+     //circle//
+    glPushMatrix();
+
+
+    glBegin(GL_QUADS);// first stand to hold the blade
+    glColor3ub(255,255,0);
+    glVertex2f(x+f*0.0f,y+f*0.0f);
+    glVertex2f(x+f*5.0f,y+f*0.0f);
+    glVertex2f(x+f*5.0f,y+f*0.25f);
+    glVertex2f(x+f*0.0f,y+f*0.25f);
+    glEnd();
+
+    glBegin(GL_QUADS);// second stand to hold the blade
+    glColor3ub(255,255,0);
+    glVertex2f(x+f*0.0f,y+f*0.0f);
+    glVertex2f(x+f*0.0f,y+f*5.0f);
+    glVertex2f(x+f*-0.25f,y+f*5.0f);
+    glVertex2f(x+f*-0.25f,y+f*0.0f);
+    glEnd();
+
+    glBegin(GL_QUADS);// third stand to hold the blade
+    glColor3ub(255,255,0);
+    glVertex2f(x+f*0.0f,y+f*-0.25f);
+    glVertex2f(x+f*0.0f,y+f*0.0f);
+    glVertex2f(x+f*-5.0f,y+f*0.0f);
+    glVertex2f(x+f*-5.0f,y+f*-0.25f);
+    glEnd();
+
+    glBegin(GL_QUADS);// fourth stand to hold the blade
+    glColor3ub(255,255,0);
+    glVertex2f(x+f*0.25f,y+f*0.0f);
+    glVertex2f(x+f*0.0f,y+f*0.0f);
+    glVertex2f(x+f*0.0f,y+f*-5.0f);
+    glVertex2f(x+f*0.25f,y+f*-5.0f);
+    glEnd();
+
+    glBegin(GL_TRIANGLES);// first triangular blade to hold the blade
+    glColor3ub(128,0,0);
+    glVertex2f(x+f*0.25f,y+f*0.0f);
+    glVertex2f(x+f*5.0f,y+f*-2.5f);
+    glVertex2f(x+f*5.0f,y+f*0.0f);
+    glEnd();
+
+    glBegin(GL_TRIANGLES);// second triangular blade to hold the blade
+    glColor3ub(128,0,0);
+    glVertex2f(x+f*0.0f,y+f*0.025f);
+    glVertex2f(x+f*2.5f,y+f*5.0f);
+    glVertex2f(x+f*0.0f,y+f*5.0f);
+    glEnd();
+
+    glBegin(GL_TRIANGLES);// third triangular blade to hold the blade
+    glColor3ub(128,0,0);
+    glVertex2f(x+f*-0.25f,y+f*0.0f);
+    glVertex2f(x+f*-5.0f,y+f*2.5f);
+    glVertex2f(x+f*-5.0f,y+f*0.0f);
+    glEnd();
+
+    glBegin(GL_TRIANGLES);// fourth triangular blade to hold the blade
+    glColor3ub(128,0,0);
+    glVertex2f(x+f*0.0f,y+f*-0.025f);
+    glVertex2f(x+f*-2.5f,y+f*-5.0f);
+    glVertex2f(x+f*0.0f,y+f*-5.0f);
+    glEnd();
+
+    glPopMatrix();
     glEnd();
 }
 
@@ -332,6 +420,9 @@ void lightHouse(int x,int y)
     glVertex2f(3+x, 40+y);
     glVertex2f(0.0+x, 43+y);
     glEnd();
+
+    //windmill
+    windmillFunc(3,-70,25);
 
     glFlush();
 }
