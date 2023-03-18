@@ -10,7 +10,11 @@
 #include <math.h>
 #include <stdlib.h>
 
+float _moveA = 0.0f;
+float _moveB = 0.0f;
+float _moveC = 0.0f;
 float _angle1 = 0.0f;
+float speed = 0.02f;
 float sun=-40.0;                    // Global Variable for sun.
 float moon=190.0;                   // Global Variable for moon.
 float cloud=200.0;                  // Global Variable for cloud.
@@ -152,10 +156,10 @@ void waveFunc(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
     glEnd();
 }
 
-void hut(float x,float y,float x1,float y1){
+void hut(float x,float y,float x1,float y1,float c1){
     glBegin(GL_POLYGON);
     //body
-    glColor3b(87,59,53);
+    glColor3b(c1+87,59,53);
     glVertex2f(x,y);
     glVertex2f(x,y+y1);
     glVertex2f(x+x1,y+y1);
@@ -163,7 +167,7 @@ void hut(float x,float y,float x1,float y1){
     glEnd();
 
     //roof
-    glColor3b(102,51,42);
+    glColor3b(c1+102,51,42);
     glBegin(GL_TRIANGLES);
     glVertex2f(x-2,y+y1);
     glVertex2f(x+(x1/2),y+y1+(y1/2));
@@ -180,92 +184,105 @@ void hut(float x,float y,float x1,float y1){
     glEnd();
 }
 
-void windmillFunc(float f,float x,float y){
+void windmillFunc(float f,float x1,float y1,float x,float y){
+    ///windmill structure///
     glBegin(GL_POLYGON);// Draw a Red 1x1 Square centered at origin
     glColor3ub(192,192,192);
     //glColor3ub(0,206,209);
-    float x1=-96,y1=-9;
 
-    glVertex2f(x1+x+f*31.0f,y1+y+f*2.0f);
-    glVertex2f(x1+x+f*30.0f,y1+y+f*-6.0f);
-    glVertex2f(x1+x+f*34.0f,y1+y+f*-6.0f);
-    glVertex2f(x1+x+f*33.0f,y1+y+f*2.0f);
-    glVertex2f(x1+x+f*32.5f,y1+y+f*3.0f);
-    glVertex2f(x1+x+f*31.5f,y1+y+f*3.0f);
-
-
+    glVertex2f((f+1)*31.0f-x1,(f+1)*2.0f+y1);
+    glVertex2f((f+1)*30.0f-x1,(f+1)*-6.0f+y1);
+    glVertex2f((f+1)*34.0f-x1,(f+1)*-6.0f+y1);
+    glVertex2f((f+1)*33.0f-x1,(f+1)*2.0f+y1);
+    glVertex2f((f+1)*32.5f-x1,(f+1)*3.0f+y1);
+    glVertex2f((f+1)*31.5f-x1,(f+1)*3.0f+y1);
 
     glEnd();
 
-
      //circle//
     glPushMatrix();
+    glColor3ub(0,0,0);
+    glTranslatef(-72.0f,32.0f,0.0f);
+    glutSolidSphere(0.5,150,150);
+	glRotatef(_angle1, 0.0f, 0.0f,1.0f);
 
 
     glBegin(GL_QUADS);// first stand to hold the blade
     glColor3ub(255,255,0);
-    glVertex2f(x+f*0.0f,y+f*0.0f);
-    glVertex2f(x+f*5.0f,y+f*0.0f);
-    glVertex2f(x+f*5.0f,y+f*0.25f);
-    glVertex2f(x+f*0.0f,y+f*0.25f);
+    glVertex2f(f*0.0f,f*0.0f);
+    glVertex2f(f*5.0f,f*0.0f);
+    glVertex2f(f*5.0f,f*0.25f);
+    glVertex2f(f*0.0f,f*0.25f);
     glEnd();
 
     glBegin(GL_QUADS);// second stand to hold the blade
-    glColor3ub(255,255,0);
-    glVertex2f(x+f*0.0f,y+f*0.0f);
-    glVertex2f(x+f*0.0f,y+f*5.0f);
-    glVertex2f(x+f*-0.25f,y+f*5.0f);
-    glVertex2f(x+f*-0.25f,y+f*0.0f);
+    glColor3ub(f*255,f*255,0);
+    glVertex2f(f*0.0f,f*0.0f);
+    glVertex2f(f*0.0f,f*5.0f);
+    glVertex2f(f*-0.25f,f*5.0f);
+    glVertex2f(f*-0.25f,f*0.0f);
     glEnd();
 
     glBegin(GL_QUADS);// third stand to hold the blade
     glColor3ub(255,255,0);
-    glVertex2f(x+f*0.0f,y+f*-0.25f);
-    glVertex2f(x+f*0.0f,y+f*0.0f);
-    glVertex2f(x+f*-5.0f,y+f*0.0f);
-    glVertex2f(x+f*-5.0f,y+f*-0.25f);
+    glVertex2f(f*0.0f,f*-0.25f);
+    glVertex2f(f*0.0f,f*0.0f);
+    glVertex2f(f*-5.0f,f*0.0f);
+    glVertex2f(f*-5.0f,f*-0.25f);
     glEnd();
 
     glBegin(GL_QUADS);// fourth stand to hold the blade
     glColor3ub(255,255,0);
-    glVertex2f(x+f*0.25f,y+f*0.0f);
-    glVertex2f(x+f*0.0f,y+f*0.0f);
-    glVertex2f(x+f*0.0f,y+f*-5.0f);
-    glVertex2f(x+f*0.25f,y+f*-5.0f);
+    glVertex2f(f*0.25f,f*0.0f);
+    glVertex2f(f*0.0f,f*0.0f);
+    glVertex2f(f*0.0f,f*-5.0f);
+    glVertex2f(f*0.25f,f*-5.0f);
     glEnd();
 
     glBegin(GL_TRIANGLES);// first triangular blade to hold the blade
     glColor3ub(128,0,0);
-    glVertex2f(x+f*0.25f,y+f*0.0f);
-    glVertex2f(x+f*5.0f,y+f*-2.5f);
-    glVertex2f(x+f*5.0f,y+f*0.0f);
+    glVertex2f(f*0.25f,f*0.0f);
+    glVertex2f(f*5.0f,f*-2.5f);
+    glVertex2f(f*5.0f,f*0.0f);
     glEnd();
 
     glBegin(GL_TRIANGLES);// second triangular blade to hold the blade
     glColor3ub(128,0,0);
-    glVertex2f(x+f*0.0f,y+f*0.025f);
-    glVertex2f(x+f*2.5f,y+f*5.0f);
-    glVertex2f(x+f*0.0f,y+f*5.0f);
+    glVertex2f(f*0.0f,f*0.025f);
+    glVertex2f(f*2.5f,f*5.0f);
+    glVertex2f(f*0.0f, f*5.0f);
     glEnd();
 
     glBegin(GL_TRIANGLES);// third triangular blade to hold the blade
     glColor3ub(128,0,0);
-    glVertex2f(x+f*-0.25f,y+f*0.0f);
-    glVertex2f(x+f*-5.0f,y+f*2.5f);
-    glVertex2f(x+f*-5.0f,y+f*0.0f);
+    glVertex2f(f*-0.25f,f*0.0f);
+    glVertex2f(f*-5.0f,f*2.5f);
+    glVertex2f(f*-5.0f,f*0.0f);
     glEnd();
 
     glBegin(GL_TRIANGLES);// fourth triangular blade to hold the blade
     glColor3ub(128,0,0);
-    glVertex2f(x+f*0.0f,y+f*-0.025f);
-    glVertex2f(x+f*-2.5f,y+f*-5.0f);
-    glVertex2f(x+f*0.0f,y+f*-5.0f);
+    glVertex2f(f*0.0f,f*-0.025f);
+    glVertex2f(f*-2.5f,f*-5.0f);
+    glVertex2f(f*0.0f,-f*5.0f);
     glEnd();
 
     glPopMatrix();
-    glEnd();
 
-    hut(-10,-5,10,15);
+    hut(0,-25,10,15,0);
+    hut(-20,-5,10,15,-25);
+}
+
+//function for windlmill
+void update3(int value) {
+
+    _angle1-=2.0f;
+    if(_angle1 > 360.0)
+    {
+        _angle1-=360;
+    }
+
+	glutTimerFunc(10, update3, 0); //Notify GLUT to call update again in 25 milliseconds
 }
 
 void humanFunc(float humanx,float humany)
@@ -452,7 +469,7 @@ void lightHouse(int x,int y)
     glEnd();
 
     //windmill
-    windmillFunc(3,-70,25);
+    windmillFunc(3,200,20,100,10);
 
     glFlush();
 }
@@ -463,6 +480,7 @@ void shop(int x,int y){
 
     //shopkeeper
     humanFunc(150,20);
+    humanFunc(75,10);
     // Draw the shop body
     glColor3f(0.96f, 0.87f, 0.70f); // brown
     glBegin(GL_POLYGON);
@@ -737,12 +755,12 @@ void drawMyDesign(){
     char sir1des[]="Assistant Professor Gd-III";
     char sir2[]="Mr. PUNEETH R P";
     char sir2des[]="Assistant Professor Gd-II";
-    char projectName[]=" VINLAND ISLAND";
+    char projectName[]="    VINLAND    ";
     int i,name_usn_length=42, projectName_length=15,sirs_length=10,sir1_length=19,sir2_length=15,sir1des_length=26,sir2des_length=25;
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3b(2, 200, 159);
     displayText(projectName,projectName_length,20,42);
-    drawLine(20,41,29,41);
+    drawLine(22,41,27,41);
     glColor3b(127,127,127);
     displayText(ajn,name_usn_length,8,35);
     displayText(afd,name_usn_length,8,30);
@@ -766,6 +784,7 @@ int main(int argc, char**argv)
     glutDisplayFunc(drawMyDesign);
     glutMouseFunc(mouse);
     glutKeyboardFunc(keyboard);
+    glutTimerFunc(10, update3, 0);
     glutMainLoop();
     return 0;
 }
