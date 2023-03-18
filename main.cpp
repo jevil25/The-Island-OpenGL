@@ -273,8 +273,27 @@ void windmillFunc(float f,float x1,float y1,float x,float y){
     hut(-20,-5,10,15,-25);
 }
 
+//function for Boat
+void updateBoat(int value)
+{
+    boat = boat + 0.01;
+    glutTimerFunc(1000,updateBoat,0);
+}
+
+//waves movwment
+void updateWaves(int value)
+{
+    //move wave
+   if(wave<=150)   //moving limit with the display measurement
+   wave=wave+0.5; //changing the object position for redisplaying
+
+   else
+   wave=-150;
+    glutTimerFunc(10000,updateWaves,0);
+}
+
 //function for windlmill
-void update3(int value) {
+void updateWindMill(int value) {
 
     _angle1-=2.0f;
     if(_angle1 > 360.0)
@@ -282,7 +301,9 @@ void update3(int value) {
         _angle1-=360;
     }
 
-	glutTimerFunc(10, update3, 0); //Notify GLUT to call update again in 25 milliseconds
+    glutTimerFunc(20,updateBoat,0);
+    glutTimerFunc(20,updateWaves,0);
+	glutTimerFunc(10, updateWindMill, 0); //Notify GLUT to call update again in 25 milliseconds
 }
 
 void humanFunc(float humanx,float humany)
@@ -630,10 +651,10 @@ void sky(){
     //sail bamboo
    glBegin(GL_QUADS);
        glColor3f(0.49, 0.32, 0.21);
-    glVertex3f(boat-71.0,-44.0,0);
-    glVertex3f(boat-71.5,-44.0,0.0);
-     glVertex3f(boat-71.5,-70.0,0.0);
-    glVertex3f(boat-71.0,-70.0,0);
+    glVertex3f(boat-31.0,-44.0,0);
+    glVertex3f(boat-31.5,-44.0,0.0);
+     glVertex3f(boat-31.5,-70.0,0.0);
+    glVertex3f(boat-31.0,-70.0,0);
     glEnd();
 
     //sail
@@ -784,7 +805,7 @@ int main(int argc, char**argv)
     glutDisplayFunc(drawMyDesign);
     glutMouseFunc(mouse);
     glutKeyboardFunc(keyboard);
-    glutTimerFunc(10, update3, 0);
+    glutTimerFunc(10, updateWindMill, 0);
     glutMainLoop();
     return 0;
 }
