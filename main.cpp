@@ -10,6 +10,7 @@
 #include <math.h>
 #include <stdlib.h>
 
+float human=-10;
 float _moveA = 0.0f;
 float _moveB = 0.0f;
 float _moveC = 0.0f;
@@ -28,6 +29,7 @@ float secondHuman=-12.0;            // Global Variable for human.
 float football=0;                   // Global Variable for Football.
 float h1=75.0;                      // Global Variable for sun.
 float bladeAngle = 0.0f;            // Angle of the windmill blades in degrees
+void humanFunc(float humanx,float humany);
 
 int shift=0,flag=0;
 
@@ -499,9 +501,9 @@ void lightHouse(int x,int y)
 void shop(int x,int y){
     char text1[]="C   O   C   O";
 
-    //shopkeeper
+     //shopkeeper
     humanFunc(150,20);
-    humanFunc(75,10);
+    humanFunc(-10,10);
     // Draw the shop body
     glColor3f(0.96f, 0.87f, 0.70f); // brown
     glBegin(GL_POLYGON);
