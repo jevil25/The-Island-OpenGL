@@ -10,7 +10,8 @@
 #include <math.h>
 #include <stdlib.h>
 
-float human=-10;
+float humanx=150,humany=20;
+float humanx1=-10,humany1=10;
 float _moveA = 0.0f;
 float _moveB = 0.0f;
 float _moveC = 0.0f;
@@ -29,7 +30,7 @@ float secondHuman=-12.0;            // Global Variable for human.
 float football=0;                   // Global Variable for Football.
 float h1=75.0;                      // Global Variable for sun.
 float bladeAngle = 0.0f;            // Angle of the windmill blades in degrees
-void humanFunc(float humanx,float humany);
+void humanFunc(float humany);
 
 int shift=0,flag=0;
 
@@ -158,7 +159,7 @@ void waveFunc(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
     glEnd();
 }
 
-void hut(float x,float y,float x1,float y1,float c1){
+void hut(float x,float y,float x1,float y1,float c1,float c){
     glBegin(GL_POLYGON);
     //body
     glColor3b(c1+87,59,53);
@@ -177,7 +178,7 @@ void hut(float x,float y,float x1,float y1,float c1){
     glEnd();
 
     //door
-    glColor3b(0,0,0);
+    glColor3b(c,c,c);
     glBegin(GL_POLYGON);
     glVertex2f(x+3,y-4+4);
     glVertex2f(x+3,y+6+4);
@@ -271,13 +272,20 @@ void windmillFunc(float f,float x1,float y1,float x,float y){
 
     glPopMatrix();
 
-    hut(0,-25,10,15,0);
-    hut(-20,-5,10,15,-25);
+    hut(0,-25,10,15,0,105);
+    hut(-20,-5,10,15,-25,0);
+
+    if(humanx1==300){
+        hut(0,-25,10,15,0,0);
+    }
 }
 
 //function for Boat
 void updateBoat(int value)
 {
+    if(boat>200){
+        boat=-50;
+    }
     boat = boat + 0.01;
     glutTimerFunc(1000,updateBoat,0);
 }
@@ -288,10 +296,21 @@ void updateWaves(int value)
     //move wave
    if(wave<=150)   //moving limit with the display measurement
    wave=wave+0.5; //changing the object position for redisplaying
-
    else
    wave=-150;
-    glutTimerFunc(10000,updateWaves,0);
+
+   int flag=0;
+   if(humanx1<80){
+        humanx1 = humanx1 + 0.06;
+        flag=1;
+    }
+
+   if(flag==0){
+    humanx1=300;
+   }
+
+   glutTimerFunc(10000,updateWaves,0);
+   glutPostRedisplay();
 }
 
 //function for windlmill
@@ -308,7 +327,7 @@ void updateWindMill(int value) {
 	glutTimerFunc(10, updateWindMill, 0); //Notify GLUT to call update again in 25 milliseconds
 }
 
-void humanFunc(float humanx,float humany)
+void humanFunc()
 {
         //MAN LEFT
 //man head
@@ -370,7 +389,7 @@ void humanFunc(float humanx,float humany)
     glVertex3f(humanx-77.0,humany-24.0,0.0);
     glEnd();
 
-//man pent
+//man pant
     glBegin(GL_QUADS);
        glColor3f(1.0, 0.0, 0);
     glVertex3f(humanx-82.0,humany-28.0,0);
@@ -385,6 +404,92 @@ void humanFunc(float humanx,float humany)
     glVertex3f(humanx-78.5,humany-35.0,0.0);
     glVertex3f(humanx-78.5,humany-38.0,0);
     glVertex3f(humanx-81.5,humany-38.0,0.0);
+    glEnd();
+//man leg divider
+    glBegin(GL_LINES);
+       glColor3f(0.0, 0.0, 0);
+    glVertex3f(humanx-80.0,humany-32.0,0);
+    glVertex3f(humanx-80.0,humany-38.0,0.0);
+    glEnd();
+}
+
+void movingHumanFunc()
+{
+        //MAN LEFT
+//man head
+       glColor3f(1, 0.76, 0.41);
+    sunFunc(1.5,1.5,humanx1-80.0,humany1-20.5);
+
+//main hair
+    glColor3f(0,0,0);
+    glBegin(GL_QUADS);
+    glVertex2f(humanx1-81.25,humany1-19.25);
+    glVertex2f(humanx1-81.25,humany1-18);
+    glVertex2f(humanx1-78.75,humany1-18);
+    glVertex2f(humanx1-78.75,humany1-19.25);
+    glEnd();
+
+//man eyes
+    glColor3f(0,0,0);
+    glPointSize(2);
+    glBegin(GL_POINTS);
+    glVertex2f(humanx1-80.75,humany1-20);
+    glVertex2f(humanx1-79.25,humany1-20);
+    glEnd();
+
+//mans  mouth
+    glLineWidth(0.5f);
+    glBegin(GL_LINES);
+    glVertex2f(humanx1-80.75,humany1-21.5);
+    glVertex2f(humanx1-79.25,humany1-21.5);
+    glEnd();
+
+//man chest
+    glBegin(GL_QUADS);
+       glColor3f(1, 0.76, 0.41);
+    glVertex3f(humanx1-83.0,humany1-22.0,0);
+    glVertex3f(humanx1-77.0,humany1-22.0,0.0);
+    glVertex3f(humanx1-77.0,humany1-28.0,0);
+    glVertex3f(humanx1-83.0,humany1-28.0,0.0);
+    glEnd();
+//man t-shirt
+    glColor3f(0.0f, 0.0f, 1.0f); //red
+    glBegin(GL_QUADS);
+    glVertex3f(humanx1-82.0,humany1-22.0,0);
+    glVertex3f(humanx1-78.0,humany1-22.0,0.0);
+    glVertex3f(humanx1-78.0,humany1-28.0,0);
+    glVertex3f(humanx1-82.0,humany1-28.0,0.0);
+    glEnd();
+
+    glBegin(GL_QUADS);
+    glVertex3f(humanx1-83.0,humany1-22.0,0);
+    glVertex3f(humanx1-82.0,humany1-22.0,0.0);
+    glVertex3f(humanx1-82.0,humany1-24.0,0);
+    glVertex3f(humanx1-83.0,humany1-24.0,0.0);
+    glEnd();
+
+    glBegin(GL_QUADS);
+    glVertex3f(humanx1-77.0,humany1-22.0,0);
+    glVertex3f(humanx1-78.0,humany1-22.0,0.0);
+    glVertex3f(humanx1-78.0,humany1-24.0,0);
+    glVertex3f(humanx1-77.0,humany1-24.0,0.0);
+    glEnd();
+
+//man pant
+    glBegin(GL_QUADS);
+       glColor3f(1.0, 0.0, 0);
+    glVertex3f(humanx1-82.0,humany1-28.0,0);
+    glVertex3f(humanx1-78.0,humany1-28.0,0.0);
+    glVertex3f(humanx1-78.0,humany1-35.0,0);
+    glVertex3f(humanx1-82.0,humany1-35.0,0.0);
+    glEnd();
+//man legs
+    glBegin(GL_QUADS);
+       glColor3f(1, 0.76, 0.41);
+    glVertex3f(humanx1-81.5,humany1-35.0,0);
+    glVertex3f(humanx1-78.5,humany1-35.0,0.0);
+    glVertex3f(humanx1-78.5,humany1-38.0,0);
+    glVertex3f(humanx1-81.5,humany1-38.0,0.0);
     glEnd();
 //man leg divider
     glBegin(GL_LINES);
@@ -502,8 +607,7 @@ void shop(int x,int y){
     char text1[]="C   O   C   O";
 
      //shopkeeper
-    humanFunc(150,20);
-    humanFunc(-10,10);
+    humanFunc();
     // Draw the shop body
     glColor3f(0.96f, 0.87f, 0.70f); // brown
     glBegin(GL_POLYGON);
@@ -663,6 +767,7 @@ void sky(){
     glColor3f(0.9, 0.9, 0.9);
     sailL(2,22,boat-31.5,-69.0);
     sailR(3,25,boat-31.0,-69.0);
+    movingHumanFunc();
 
     shop(60,-20);
 
