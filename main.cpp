@@ -87,6 +87,101 @@ void displayText(char *text,float length,float x,float y){
     }
 }
 
+void treeFunc(int x, int y,int s)
+{
+    glPushMatrix();
+
+    glScalef(s,s,s);
+    //tree left side
+    //polygon 1
+    glBegin(GL_POLYGON);
+    glColor3ub(139,69,19);
+    glVertex2f(-9.5 + x,1 + y);
+    glVertex2f(-9 + x,1.5 + y);
+    glVertex2f(-9.5 + x,2.5 + y);
+    glVertex2f(-10 + x,2 + y);
+    glEnd();
+
+    //polygon 2
+    glBegin(GL_POLYGON);
+    glColor3ub(139,69,19);
+    glVertex2f(-9 + x,1.5 + y);
+    glVertex2f(-8.5 + x,1 + y);
+    glVertex2f(-8 + x,2 + y);
+    glVertex2f(-8 + x,2.5 + y);
+    glEnd();
+
+    //polygon 3
+    glBegin(GL_POLYGON);
+    glColor3ub(139,69,19);
+    glVertex2f(-9.5 + x,1 + y);
+    glVertex2f(-9.5 + x,-3.5 + y);
+    glVertex2f(-9 + x,-4 + y);
+    glVertex2f(-8.5 + x,-3.5 + y);
+    glVertex2f(-8.5 + x,1 + y);
+    glEnd();
+
+    //polygon 4
+    glBegin(GL_POLYGON);
+    glColor3ub(139,69,19);
+    glVertex2f(-8.5 + x,-3 + y);
+    glVertex2f(-9.5 + x,-3 + y);
+    glVertex2f(-10.5 + x,-3.5 + y);
+    glVertex2f(-7.5 + x,-3.5 + y);
+    glEnd();
+
+    //tree upper side
+    glPushMatrix();
+    glColor3ub(50,205,50);
+    glTranslatef(-10.5 + x, 2.5 + y, 0);
+    glutSolidSphere(1.0, 150, 150);
+    glPopMatrix();
+
+    glPushMatrix();
+    glColor3ub(50,205,50);
+    glTranslatef(-9.5 + x, 3.0 + y, 0);
+    glutSolidSphere(1.0, 150, 150);
+    glPopMatrix();
+
+    glPushMatrix();
+    glColor3ub(50,205,50);
+    glTranslatef(-7.5 + x, 1.5 + y, 0);
+    glutSolidSphere(1.0, 150, 150);
+    glPopMatrix();
+
+    glPushMatrix();
+    glColor3ub(50,205,50);
+    glTranslatef(-7.5 + x, 2.5 + y, 0);
+    glutSolidSphere(1.0, 150, 150);
+    glPopMatrix();
+
+    glPushMatrix();
+    glColor3ub(50,205,50);
+    glTranslatef(-8.5+x, 3.5+y, 0);
+    glutSolidSphere(1.0, 150, 150);
+    glPopMatrix();
+
+    glPushMatrix();
+    glColor3ub(50,205,50);
+    glTranslatef(-10.0+x, 4.0+y, 0);
+    glutSolidSphere(1.0, 150, 150);
+    glPopMatrix();
+
+    glPushMatrix();
+    glColor3ub(50,205,50);
+    glTranslatef(-8.0+x, 4.0+y, 0);
+    glutSolidSphere(1.0, 150, 150);
+    glPopMatrix();
+
+    glPushMatrix();
+    glColor3ub(50,205,50);
+    glTranslatef(-9.0+x, 5.0+y, 0);
+    glutSolidSphere(1.0, 150, 150);
+    glPopMatrix();
+
+    glPopMatrix();
+}
+
 void innerView()
 {
     //Grass
@@ -107,6 +202,15 @@ void innerView()
      glVertex3f(100.0,-7.0,0.0);
     glVertex3f(-100.0,-10.0,0);
     glEnd();
+
+    int i;
+    for(i=0;i<30;i=i+3){
+     treeFunc(-40+i,0,2);
+    }
+
+    for(i=0;i<60;i=i+3){
+     treeFunc(20+i,0,2);
+    }
 }
 
 
