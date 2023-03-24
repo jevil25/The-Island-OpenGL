@@ -203,13 +203,19 @@ void innerView()
     glVertex3f(-100.0,-10.0,0);
     glEnd();
 
-    int i;
-    for(i=0;i<30;i=i+3){
-     treeFunc(-40+i,0,2);
+    int i,j,n=30;
+    for(j=0;j>-100;j=j-15){
+        for(i=0;i<n;i=i+3){
+         treeFunc(-40+i,0+j,2);
+        }
+        n+=5;
     }
-
-    for(i=0;i<60;i=i+3){
-     treeFunc(20+i,0,2);
+    n=60;
+    for(j=0;j>-100;j=j-15){
+        for(i=0;i<n;i=i+3){
+         treeFunc(20+i,0+j,2);
+        }
+        n-=5;
     }
 }
 
