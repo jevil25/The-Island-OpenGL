@@ -87,6 +87,29 @@ void displayText(char *text,float length,float x,float y){
     }
 }
 
+void innerView()
+{
+    //Grass
+    glBegin(GL_QUADS);
+       glColor3f(0.17, 0.49, 0);
+    glVertex3f(-100.0,-115.0,0);
+    glVertex3f(100.0,-115.0,0.0);
+     glVertex3f(100.0,-5.0,0.0);
+    glVertex3f(-100.0,0.0,0);
+    glEnd();
+
+    displayText("hii",3,100,100);
+
+        glBegin(GL_QUADS);
+       glColor3f(0.17, 0.49, 0);
+    glVertex3f(-100.0,-5.0,0);
+    glVertex3f(100.0,-5.0,0.0);
+     glVertex3f(100.0,-7.0,0.0);
+    glVertex3f(-100.0,-10.0,0);
+    glEnd();
+}
+
+
 // create circle for left sail
 void sailL(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
 {
@@ -775,6 +798,13 @@ void sky(){
     glFlush();
 }
 
+void finalDisplay()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    innerView();
+    glEnd();
+    glFlush();
+}
 
 
 void newDisplay(){
@@ -786,10 +816,27 @@ void newDisplay(){
     glFlush();
 }
 
+void keyboardfinal(unsigned char key,int x, int y){
+    if(key == 'e' || key == 'E'){
+            exit(0);
+        }
+}
+
 // Mouse click event handler function
 void keyboard(unsigned char key,int x, int y){
     if(key == 'e' || key == 'E'){
         exit(0);
+    }
+    if(key == 'f' || key == 'F'){
+        glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
+        glutInitWindowPosition(0,0);
+        glutInitWindowSize(2200,1200);
+        glutFullScreen();
+        glutCreateWindow("Island Inner View");
+        initDesign();
+        glutFullScreen();
+        glutDisplayFunc(finalDisplay);
+        glutKeyboardFunc(keyboardfinal);
     }
 }
 
