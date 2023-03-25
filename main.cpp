@@ -19,9 +19,9 @@ float _angle1 = 0.0f;
 float speed = 0.02f;
 float sun=-40.0;                    // Global Variable for sun.
 float moon=190.0;                   // Global Variable for moon.
-float cloud=200.0;                  // Global Variable for cloud.
-float smallCloud=300.0;             // Global Variable for small cloud.
-float lastCloud=400.0;              // Global Variable for last cloud.
+float cloud=180.0;                  // Global Variable for cloud.
+float smallCloud=80.0;             // Global Variable for small cloud.
+float lastCloud=20.0;              // Global Variable for last cloud.
 float wave=-20.0;                   // Global Variable for wave.
 float boat=-30.0;                   // Global Variable for boat.
 float ship=200.0;                   // Global Variable for ship.
@@ -182,6 +182,22 @@ void treeFunc(int x, int y,int s)
     glPopMatrix();
 }
 
+// create circle for sun
+void sunFunc(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
+{
+    int i=0;
+    float angle;
+    GLfloat PI = 3.1416;
+    glBegin(GL_POLYGON);
+    glVertex2f(x,y);
+    for(i=0;i<=360;i++)
+    {
+        angle = i*PI /180;
+        glVertex2f(x+(cos(angle)*rx),y+(sin(angle)*ry));
+    }
+    glEnd();
+}
+
 void innerView()
 {
     //Grass
@@ -217,6 +233,31 @@ void innerView()
         }
         n-=5;
     }
+
+    //cloud small
+    glColor3f(1, 1, 1);
+    sunFunc(10,10,smallCloud-60.0,80.0);
+    sunFunc(10,10,smallCloud-70.0,85.0);
+     sunFunc(10,10,smallCloud-75.0,80.0);
+
+    //cloud last
+    sunFunc(11,10,lastCloud-95.0,60.0);
+    sunFunc(11,10,lastCloud-105.0,53.0);
+     sunFunc(11,10,lastCloud-110.0,65.0);
+
+    //cloud
+    glColor3f(1, 1, 1);
+    sunFunc(15,20,cloud-90.0,55.0);
+        glColor3f(1, 1, 1);
+    sunFunc(15,20,cloud-110.0,60.0);
+        glColor3f(1, 1, 1);
+    sunFunc(15,20,cloud-120.0,50.0);
+        glColor3f(1, 1, 1);
+    sunFunc(15,20,cloud-105.0,50.0);
+
+    //sun
+    glColor3f(1, 0.36, 0);
+    sunFunc(12,20,-30,130.0);
 }
 
 
@@ -257,22 +298,6 @@ void drawLine(GLfloat x1,GLfloat y1,GLfloat x2,GLfloat y2)
     glBegin(GL_LINES);
     glVertex2f(x1,y1);
     glVertex2f(x2,y2);
-    glEnd();
-}
-
-// create circle for sun
-void sunFunc(GLfloat rx,GLfloat ry,GLfloat x,GLfloat y)
-{
-    int i=0;
-    float angle;
-    GLfloat PI = 3.1416;
-    glBegin(GL_POLYGON);
-    glVertex2f(x,y);
-    for(i=0;i<=360;i++)
-    {
-        angle = i*PI /180;
-        glVertex2f(x+(cos(angle)*rx),y+(sin(angle)*ry));
-    }
     glEnd();
 }
 
