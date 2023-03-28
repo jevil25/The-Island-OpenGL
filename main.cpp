@@ -31,6 +31,7 @@ float football=0;                   // Global Variable for Football.
 float h1=75.0;                      // Global Variable for sun.
 float bladeAngle = 0.0f;            // Angle of the windmill blades in degrees
 void humanFunc(float humany);
+void humanFunc();
 
 int shift=0,flag=0;
 
@@ -234,6 +235,14 @@ void innerView()
         n-=5;
     }
 
+    humanx=10;
+    humany=20;
+    humanFunc();
+
+    humanx=150;
+    humany=-34;
+    humanFunc();
+
     //cloud small
     glColor3f(1, 1, 1);
     sunFunc(10,10,smallCloud-60.0,80.0);
@@ -258,6 +267,32 @@ void innerView()
     //sun
     glColor3f(1, 0.36, 0);
     sunFunc(12,20,-30,130.0);
+
+    //river
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    glBegin(GL_POLYGON);
+    glColor3f(0,117,170);
+    glVertex2f(-10,-100);
+    glVertex2f(0,-70);
+    glVertex2f(15,-66);
+    glVertex2f(10,-100);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+    glVertex2f(0,-70);
+    glVertex2f(-8,-35);
+    glVertex2f(3,-37);
+    glVertex2f(15,-66);
+    glEnd();
+
+    glBegin(GL_POLYGON);
+    glVertex2f(2,-2.3);
+    glVertex2f(7,-2.5);
+    glVertex2f(3,-37);
+    glVertex2f(-8,-35);
+    glEnd();
+    glFlush();
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 
