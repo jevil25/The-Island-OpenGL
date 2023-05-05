@@ -31,6 +31,7 @@ float football=0;                   // Global Variable for Football.
 float h1=75.0;                      // Global Variable for sun.
 float bladeAngle = 0.0f;            // Angle of the windmill blades in degrees
 void humanFunc(float humany);
+void keyboard(unsigned char key,int x, int y);
 void humanFunc();
 
 int shift=0,flag=0;
@@ -479,7 +480,7 @@ void updateBoat(int value)
     if(boat>200){
         boat=-50;
     }
-    boat = boat + 0.01;
+    boat = boat + 0.03;
     glutTimerFunc(1000,updateBoat,0);
 }
 
@@ -494,7 +495,7 @@ void updateWaves(int value)
 
    int flag=0;
    if(humanx1<80){
-        humanx1 = humanx1 + 0.06;
+        humanx1 = humanx1 + 0.03;
         flag=1;
     }
 
@@ -990,6 +991,17 @@ void keyboardfinal(unsigned char key,int x, int y){
     if(key == 'e' || key == 'E'){
             exit(0);
         }
+    if(key == 'b' || key == 'B'){
+        glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
+                glutInitWindowPosition(0,0);
+                glutInitWindowSize(2200,1200);
+                glutFullScreen();
+                glutCreateWindow("Island View");
+                initDesign();
+                glutFullScreen();
+                glutDisplayFunc(newDisplay);
+                glutKeyboardFunc(keyboard);
+    }
 }
 
 // Mouse click event handler function
@@ -998,13 +1010,13 @@ void keyboard(unsigned char key,int x, int y){
         exit(0);
     }
     if(key == 'f' || key == 'F'){
-        glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
+       /* glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
         glutInitWindowPosition(0,0);
         glutInitWindowSize(2200,1200);
         glutFullScreen();
         glutCreateWindow("Island Inner View");
         initDesign();
-        glutFullScreen();
+        glutFullScreen();*/
         glutDisplayFunc(finalDisplay);
         glutKeyboardFunc(keyboardfinal);
     }
